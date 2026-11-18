@@ -1,10 +1,11 @@
 (() => {
   'use strict';
-  const allowed = ['gameplay','dispatch','cam','starting','brb','ending','alert'];
+  const allowed = ['gameplay','cam','starting','brb','ending','alert','socials'];
   const scene = location.pathname.split('/').pop();
   if (!allowed.includes(scene)) return;
   const stage = document.querySelector('#stage');
   let settings = {};
+  let media={background:false,logo:false};let mediaRev=Date.now();
   // Scales to whatever size OBS/browser viewport is configured to, with a 16:9 design canvas.
   function scale() {
     const s = Math.min(innerWidth / 1920, innerHeight / 1080);
@@ -21,9 +22,27 @@
   };
   const add = (parent, name, cls, value) => { const child = el(name,cls,value); parent.append(child); return child; };
   const text = v => String(v ?? '');
+  const socialLabels={"twitch":"Twitch","youtube":"YouTube","tiktok":"TikTok","instagram":"Instagram","x":"X","discord":"Discord","facebook":"Facebook","kick":"Kick","bluesky":"Bluesky","threads":"Threads","reddit":"Reddit"};
+  function socials(parent){
+    const accounts=settings.socials && typeof settings.socials==='object'?settings.socials:{twitch:settings.handle||''};
+    const visible=Object.entries(socialLabels).filter(([key])=>typeof accounts[key]==='string'&&accounts[key].trim());
+    if(!visible.length)return;
+    const strip=add(parent,'div','social-strip');
+    for(const [key,label] of visible){
+      const pill=add(strip,'span','social-pill');
+      const icon=add(pill,'img','social-icon');icon.src='/assets/social/'+key+'.svg';icon.alt=label+' icon';
+      add(pill,'span','social-handle',accounts[key].trim());
+    }
+  }
+  function brand(parent){
+    const brandEl=add(parent,'div','brand');
+    if(media.logo){const img=add(brandEl,'img','brand-logo');img.src='/assets/custom/logo?v='+mediaRev;img.alt='';}
+    add(brandEl,'span','brand-name',text(settings.channel).toUpperCase());
+  }
   function fullScreen(type) {
     stage.classList.add('screen');
-    add(stage,'div','screen-bg');
+    const bg=add(stage,'div','screen-bg');
+    if(media.background)bg.style.backgroundImage='url("/assets/custom/background?v='+mediaRev+'")';
     add(stage,'div','palm left'); add(stage,'div','palm right');
     add(stage,'div','sun-glow'); add(stage,'div','screen-lines');
     const top=add(stage,'div','topline');
@@ -43,8 +62,8 @@
       add(cd,'div','digits','--:--').id='timer';
     }
     const bot=add(stage,'div','bottomline');
-    const brand=add(bot,'div','brand'); brand.append('ARCADE');add(brand,'span','','TIME');brand.append(' TV');
-    add(bot,'div','handle',text(settings.handle).toUpperCase());
+    brand(bot);
+    socials(bot);
   }
   function decorateCorners() {
     ['tl','tr','bl','br'].forEach(k=>add(stage,'div','corner '+k));
@@ -53,23 +72,14 @@
     decorateCorners(); add(stage,'div','rail');add(stage,'div','rail right');
     if(settings.showGameplayBar) {
       const header=add(stage,'div','game-header');
+      if(media.logo){const img=add(header,'img','game-logo');img.src='/assets/custom/logo?v='+mediaRev;img.alt='';}
       add(header,'div','headline',text(settings.channel).toUpperCase());
       add(header,'div','small',text(settings.subtitle).toUpperCase());
     }
-    if(settings.showGameplayFooter) add(stage,'div','game-footer',text(settings.handle).toUpperCase()+'  //  '+text(settings.streamTitle).toUpperCase());
-  }
-  function dispatch() {
-    const d=add(stage,'section','dispatch');
-    add(d,'div','dispatch-label','● LIVE DISPATCH FEED // MANUAL');
-    add(d,'div','dispatch-title',text(settings.dispatchTitle).toUpperCase());
-    const stars=add(d,'div','stars');
-    for(let i=0;i<6;i++) add(stars,'span','star'+(i<settings.wanted?' lit':''),'★');
-    const meta=add(d,'div','dispatch-meta');
-    if(settings.showLocation) {
-      const row=add(meta,'div','rowline');add(row,'span','k','SECTOR');add(row,'span','v',text(settings.location).toUpperCase());
-    }
-    if(settings.showMission) {
-      const row=add(meta,'div','rowline');add(row,'span','k','CURRENT PLAN');add(row,'span','v',text(settings.mission));
+    if(settings.showGameplayFooter){
+      const footer=add(stage,'div','game-footer');
+      add(footer,'span','footer-title',text(settings.streamTitle).toUpperCase());
+      socials(footer);
     }
   }
   function cam() {
@@ -86,9 +96,10 @@
     stage.replaceChildren();stage.className=settings.theme||'night';
     if(['starting','brb','ending'].includes(scene)) fullScreen(scene);
     if(scene==='gameplay') gameplay();
-    if(scene==='dispatch') dispatch();
+
     if(scene==='cam') cam();
     if(scene==='alert') alert();
+    if(scene==='socials'){const section=add(stage,'section','socials-only');socials(section);}
     countdown();
   }
   function countdown() {
@@ -102,6 +113,8 @@
   setInterval(countdown,1000);
   function update(data) {if(data && typeof data==='object'){settings=data;paint();}}
   fetch('/api/settings',{cache:'no-store'}).then(r=>r.json()).then(update).catch(()=>{stage.textContent='Overlay connection unavailable';});
+  fetch('/api/assets',{cache:'no-store'}).then(r=>r.json()).then(status=>{media=status;mediaRev=Date.now();paint();}).catch(()=>{});
   const events=new EventSource('/api/events');
   events.addEventListener('settings', ev=>{try {update(JSON.parse(ev.data));}catch{}});
+  events.addEventListener('assets',ev=>{try{media=JSON.parse(ev.data);mediaRev=Date.now();paint();}catch{}});
 })();

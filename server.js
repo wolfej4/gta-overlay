@@ -16,27 +16,50 @@ const ROOT = path.join(__dirname, 'public');
 const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, 'data');
 const SETTINGS_FILE = path.join(DATA_DIR, 'settings.json');
 fs.mkdirSync(DATA_DIR, {recursive: true});
+const SOCIAL_PLATFORMS=["twitch","youtube","tiktok","instagram","x","discord","facebook","kick","bluesky","threads","reddit"];
+const emptySocials=()=>Object.fromEntries(SOCIAL_PLATFORMS.map(name=>[name,'']));
+const mediaKinds=new Set(['background','logo']);
+const mediaPath=kind=>path.join(DATA_DIR,'custom-'+kind);
+const mediaStatus=()=>({background:fs.existsSync(mediaPath('background')),logo:fs.existsSync(mediaPath('logo'))});
+function sniffImage(buf){
+  if(buf.length>=8&&buf.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10])))return 'image/png';
+  if(buf.length>=3&&buf[0]===255&&buf[1]===216&&buf[2]===255)return 'image/jpeg';
+  if(buf.length>=12&&buf.toString('ascii',0,4)==='RIFF'&&buf.toString('ascii',8,12)==='WEBP')return 'image/webp';
+  return null;
+}
+function readImage(req){return new Promise((resolve,reject)=>{
+  let size=0,tooBig=false;const chunks=[];
+  req.on('data',part=>{size+=part.length;if(size>8*1024*1024){tooBig=true;return;}chunks.push(part);});
+  req.on('end',()=>tooBig?reject(new Error('Image exceeds 8 MB')):resolve(Buffer.concat(chunks)));
+  req.on('error',reject);
+});}
+function broadcastMedia(){
+  const msg='event: assets\ndata: '+JSON.stringify(mediaStatus())+'\n\n';
+  for(const client of clients){try{client.write(msg);}catch{clients.delete(client);}}
+}
 const defaults = {
   channel: 'ArcadeTimeTV', handle: '@ArcadeTimeTV',
+  socials:{...emptySocials(),twitch:'@ArcadeTimeTV'},
   subtitle: 'LIVE FROM LEONIDA',
   streamTitle: 'A NEW ERA OF CHAOS',
   startingText: 'THE CITY NEVER SLEEPS',
   brbText: 'GRABBING A CAFECITO',
   endingText: 'SEE YOU ON THE STREETS',
-  dispatchTitle: 'VICE CITY DISPATCH',
-  location: 'VICE CITY',
-  mission: 'Cruising the coast',
-  wanted: 0, showMission: true, showLocation: true,
   showGameplayBar: true, showGameplayFooter: true,
   camLabel: 'ARCADE CAM', camSide: 'right',
   theme: 'night',
   showAlert: false, alertTitle: 'BREAKING NEWS', alertText: 'This just in...',
   countdownEnd: null
 };
-let settings;
-try {
-  settings = {...defaults, ...JSON.parse(fs.readFileSync(SETTINGS_FILE, 'utf8'))};
-} catch { settings = {...defaults}; }
+let stored={};
+try{stored=JSON.parse(fs.readFileSync(SETTINGS_FILE,'utf8'));}catch{}
+let settings={...defaults,...stored};
+if(stored.socials&&typeof stored.socials==='object'&&!Array.isArray(stored.socials)){
+  settings.socials=emptySocials();
+  for(const p of SOCIAL_PLATFORMS)if(typeof stored.socials[p]==='string')settings.socials[p]=stored.socials[p].trim().slice(0,100);
+}else{
+  settings.socials={...emptySocials(),twitch:typeof settings.handle==='string'?settings.handle.trim():''};
+}
 const clients = new Set();
 function broadcast() {
   const payload = `event: settings\ndata: ${JSON.stringify(settings)}\n\n`;
@@ -78,9 +101,8 @@ function getBody(req) {
   });
 }
 const maxString = {channel:42, handle:42, subtitle:56, streamTitle:72, startingText:90,
-  brbText:90, endingText:90, dispatchTitle:52, location:55, mission:88,
-  camLabel:48, alertTitle:50, alertText:130};
-const boolKeys = new Set(['showMission','showLocation','showGameplayBar','showGameplayFooter','showAlert']);
+  brbText:90, endingText:90,camLabel:48,alertTitle:50,alertText:130};
+const boolKeys = new Set(['showGameplayBar','showGameplayFooter','showAlert']);
 function patchSettings(obj) {
   if (!obj || Array.isArray(obj) || typeof obj !== 'object') throw new Error('Expected an object');
   const next = {...settings};
@@ -91,9 +113,14 @@ function patchSettings(obj) {
     } else if (boolKeys.has(k)) {
       if (typeof v !== 'boolean') throw new Error('Invalid ' + k);
       next[k] = v;
-    } else if (k === 'wanted') {
-      if (!Number.isInteger(v) || v < 0 || v > 6) throw new Error('Wanted level must be 0–6');
-      next[k] = v;
+    } else if (k === 'socials') {
+      if(!v||typeof v!=='object'||Array.isArray(v))throw new Error('Invalid socials');
+      const accounts={...next.socials};
+      for(const [platform,handle] of Object.entries(v)){
+        if(!SOCIAL_PLATFORMS.includes(platform)||typeof handle!=='string')throw new Error('Invalid social platform or handle');
+        accounts[platform]=handle.trim().slice(0,100);
+      }
+      next.socials=accounts;
     } else if (k === 'camSide') {
       if (!['left','right'].includes(v)) throw new Error('Invalid camSide');
       next[k] = v;
@@ -122,14 +149,44 @@ const routes = {
   '/assets/skyline.svg':'assets/skyline.svg',
   '/assets/palm.svg':'assets/palm.svg'
 };
+for(const p of SOCIAL_PLATFORMS)routes['/assets/social/'+p+'.svg']='assets/social/'+p+'.svg';
 const types = {html:'text/html; charset=utf-8', css:'text/css; charset=utf-8', js:'application/javascript; charset=utf-8', svg:'image/svg+xml'};
-const overlays = new Set(['gameplay','dispatch','cam','starting','brb','ending','alert']);
+const overlays = new Set(['gameplay','cam','starting','brb','ending','alert','socials']);
 const server = http.createServer(async (req,res) => {
   const url = new URL(req.url, 'http://localhost');
   const p = url.pathname;
   if (req.method === 'GET' && p === '/api/version') return respond(res,200,{version:APP_VERSION});
   if (req.method === 'GET' && p === '/api/health') return respond(res,200,{ok:true});
   if (req.method === 'GET' && p === '/api/settings') return respond(res,200,settings);
+  if (req.method === 'GET' && p === '/api/assets') return respond(res,200,mediaStatus());
+  if(req.method==='GET'&&(p==='/assets/custom/background'||p==='/assets/custom/logo')){
+    const kind=p.split('/').pop();
+    return fs.readFile(mediaPath(kind),(err,bytes)=>{
+      if(err)return respond(res,404,{error:'Image not uploaded'});
+      const type=sniffImage(bytes);
+      if(!type)return respond(res,404,{error:'Unsupported image'});
+      res.writeHead(200,{'Content-Type':type,'Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});
+      res.end(bytes);
+    });
+  }
+  if((req.method==='POST'||req.method==='DELETE')&&p.startsWith('/api/assets/')){
+    const kind=p.slice('/api/assets/'.length);
+    if(!mediaKinds.has(kind))return respond(res,404,{error:'Unknown asset'});
+    if(!authorized(req)){res.setHeader('WWW-Authenticate','Basic realm="Overlay Admin"');return respond(res,401,{error:'Admin password required'});}
+    if(req.headers.origin&&req.headers.origin!=='http://'+req.headers.host&&req.headers.origin!=='https://'+req.headers.host)
+      return respond(res,403,{error:'Cross-origin upload blocked'});
+    try{
+      if(req.method==='DELETE'){
+        try{fs.unlinkSync(mediaPath(kind));}catch(e){if(e.code!=='ENOENT')throw e;}
+      }else{
+        const bytes=await readImage(req);
+        if(!sniffImage(bytes))return respond(res,400,{error:'Use PNG, JPEG or WebP'});
+        const dest=mediaPath(kind),tmp=dest+'.'+process.pid+'.tmp';
+        fs.writeFileSync(tmp,bytes,{mode:0o600});fs.renameSync(tmp,dest);
+      }
+      broadcastMedia();return respond(res,200,mediaStatus());
+    }catch(e){return respond(res,400,{error:e.message});}
+  }
   if (req.method === 'GET' && p === '/api/events') {
     res.writeHead(200,{'Content-Type':'text/event-stream; charset=utf-8', 'Cache-Control':'no-cache, no-transform', 'Connection':'keep-alive','X-Accel-Buffering':'no'});
     res.write(`event: settings\ndata: ${JSON.stringify(settings)}\n\n`);

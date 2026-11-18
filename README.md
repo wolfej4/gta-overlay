@@ -4,25 +4,33 @@ A **self-hosted**, GTA VI / Vice City-inspired, animated browser-source overlay 
 
 ## Versioning
 
-The app version is stored in **`package.json`** (starting with **v1.0.1**) and displayed on the dashboard sidebar. The server also provides `GET /api/version`, which returns the installed version. For ordinary feature/fix updates pushed to `main`, the GitHub Actions workflow `.github/workflows/auto-version.yml` automatically increases the **patch** component (for example, `1.0.1` → `1.0.2`) and commits the new version back to `main`. Each push to `main` creates one patch release; a batch of edits in one push is treated as one update. Its own version-bump commits use `[skip version]` so the workflow cannot loop.
+The app version is stored in **`package.json`** (now **v1.0.2**) and displayed on the dashboard sidebar. The server also provides `GET /api/version`, which returns the installed version. For ordinary feature/fix updates pushed to `main`, the GitHub Actions workflow `.github/workflows/auto-version.yml` automatically increases the **patch** component (for example, `1.0.1` → `1.0.2`) and commits the new version back to `main`. Each push to `main` creates one patch release; a batch of edits in one push is treated as one update. Its own version-bump commits use `[skip version]` so the workflow cannot loop.
 
 This automation requires **GitHub Actions enabled** and a workflow token allowed to write repository contents (Settings → Actions → General → Workflow permissions). If an Actions workflow fails, the version will remain unchanged until the permission or failure is resolved. For intentional breaking releases, bump the major or minor component manually and include `[skip version]` in the commit message to keep the chosen number.
 
 After a version update, redeploy with `git pull && docker compose up -d --build` to display the new version locally. The dashboard shows the version actually running inside your Docker container, not the most recent version on GitHub.
+
+## Social handles and custom branding
+
+In **Where to find you**, fill in the handles you want to display for Twitch, YouTube, TikTok, Instagram, X, Discord, Facebook, Kick, Bluesky, Threads and Reddit. Each social has a locally hosted icon. **Blank handles hide that social and its icon.** Existing single-handle installations are migrated into Twitch; clear the Twitch field if you don't want it.
+
+In **Background & logo**, upload PNG, JPEG or WebP images (up to 8 MB each). The images persist in the existing data volume and update connected OBS browser sources. The full-screen background applies to Starting Soon, BRB and Ending; gameplay stays transparent. The logo appears in full-screen and gameplay branding. **Upload the images in the admin dashboard once; the images supplied in chat are not bundled in GitHub.**
+
+The full-screen footer now displays the editable Channel Name, not a hardcoded ArcadeTimeTV brand. All dropdowns match the height and width of text inputs. The Dispatch/Wanted source and star quick action have been removed. This release is **v1.0.2**.
 
 ## Overlays
 
 | Scene | OBS URL | Background |
 |---|---|---|
 | Minimal gameplay | `/overlay/gameplay` | Transparent |
-| Dispatch / six-star widget | `/overlay/dispatch` | Transparent |
+| Social accounts and icons | `/overlay/socials` | Transparent |
 | Webcam frame | `/overlay/cam` | Transparent |
 | Manual announcement | `/overlay/alert` | Transparent |
 | Starting Soon + countdown | `/overlay/starting` | Full-screen |
 | Be Right Back | `/overlay/brb` | Full-screen |
 | Stream Ending | `/overlay/ending` | Full-screen |
 
-The dispatch stars, location, and mission are **manually controlled** from the dashboard. They are **not connected to GTA VI's internal data**. Live gameplay telemetry is **not claimed**. The cam overlay is just a decorative, transparent frame; add your actual webcam as a separate OBS source behind it. The gameplay design stays away from the HUD as much as possible.
+The Dispatch/Wanted widget and quick-action stars have been removed. The cam overlay is a decorative, transparent frame; add your webcam as a separate OBS source behind it. The gameplay design stays away from the HUD as much as possible.
 
 ## Deploy using Dockhand or Docker Compose
 
@@ -51,7 +59,7 @@ To check whether **18787** appears to be in use on your Docker host before deplo
 1. In OBS, add **Sources → + → Browser**.
 2. Set the source URL to `http://YOUR-DOCKER-IP:18787/overlay/gameplay`.
 3. Set width **1920**, height **1080**, and place it **above** your gameplay capture.
-4. Add additional Browser sources for `/overlay/dispatch` or `/overlay/cam` only when needed.
+4. Add additional Browser sources for `/overlay/socials` or `/overlay/cam` only when needed.
 5. For Starting Soon / BRB / Ending, create separate OBS scenes and use their respective URLs.
 6. For the camera, add your **Video Capture Device** underneath the `/overlay/cam` source, position the video inside the empty center of the frame, and resize as needed. The default frame sits at approximately x=1450–1900, y=394–674 on a 1920×1080 canvas; you can change it to center-left from the dashboard.
 
@@ -59,7 +67,7 @@ To check whether **18787** appears to be in use on your Docker host before deplo
 
 - Dashboard: `http://192.168.0.41:18787/admin` (replace IP with actual Docker host)
 - Gameplay: `http://192.168.0.41:18787/overlay/gameplay`
-- Dispatch: `http://192.168.0.41:18787/overlay/dispatch`
+- Socials: `http://192.168.0.41:18787/overlay/socials`
 - Camera: `http://192.168.0.41:18787/overlay/cam`
 - Starting: `http://192.168.0.41:18787/overlay/starting`
 

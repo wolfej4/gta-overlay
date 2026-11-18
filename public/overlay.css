@@ -21,3 +21,22 @@
 .alert{position:absolute;z-index:10;left:50%;top:126px;transform:translateX(-50%);min-width:500px;max-width:1100px;text-align:center;border:2px solid var(--pink);padding:19px 40px 21px;background:rgba(12,19,43,.88);box-shadow:0 0 50px rgba(255,80,165,.4);animation:alertPulse 2.5s infinite}.alert-head{color:var(--cyan);font-size:17px;letter-spacing:5px;font-weight:900}.alert-body{font-size:30px;font-weight:900;margin-top:10px;word-wrap:break-word}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}@keyframes slidein{from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:translateX(0)}}@keyframes alertPulse{0%,100%{box-shadow:0 0 40px rgba(255,80,165,.28)}50%{box-shadow:0 0 65px rgba(255,80,165,.62)}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+
+/* User branding and optional social accounts */
+.bottomline .brand{display:flex;align-items:center;gap:18px;max-width:570px;min-width:0}
+.brand-logo{max-width:180px;max-height:93px;object-fit:contain;filter:drop-shadow(0 8px 14px #071025aa)}
+.brand-name{overflow-wrap:anywhere;font-size:32px;line-height:1.1}
+.bottomline .social-strip{max-width:930px;justify-content:flex-end}
+.social-strip{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:9px 13px}
+.social-pill{display:inline-flex;align-items:center;gap:7px;padding:7px 12px;background:rgba(8,17,39,.72);border:1px solid rgba(102,231,234,.30);border-radius:99px;color:var(--cream);font:700 16px/1.2 'Trebuchet MS',Arial,sans-serif;letter-spacing:.4px;max-width:280px}
+.social-icon{width:18px;height:18px;flex:none;object-fit:contain}
+.social-handle{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.game-logo{width:auto;max-width:90px;max-height:43px;object-fit:contain;display:block;margin:0 auto 7px}
+.game-footer{display:flex;align-items:center;gap:18px;max-width:calc(100% - 150px);white-space:normal;letter-spacing:1.5px;padding:8px 18px}
+.footer-title{font-size:13px;flex:none}
+.game-footer .social-strip{gap:5px 7px;justify-content:center}
+.game-footer .social-pill{font-size:13px;padding:5px 9px}
+.game-footer .social-icon{width:15px;height:15px}
+.socials-only{position:absolute;bottom:60px;left:70px;right:70px;display:flex;justify-content:center}
+.socials-only .social-pill{font-size:24px;padding:12px 19px}
+.socials-only .social-icon{width:25px;height:25px}
