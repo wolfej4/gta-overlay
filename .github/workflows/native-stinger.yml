@@ -42,4 +42,6 @@ jobs:
             exit 0
           fi
           git commit -m "asset: bundle generated native OBS Stinger video [skip version]"
+          git fetch origin main
+          git rebase origin/main
           git push origin HEAD:main
