@@ -63,9 +63,35 @@ TWITCH_REDIRECT_URI=https://overlays.example.com/api/integrations/twitch-callbac
 
 The server requests the least scopes used for these alerts: `moderator:read:followers`, `channel:read:subscriptions`, and `bits:read` (raids need no extra scope). Twitch's official **EventSub WebSocket** delivers the notifications via an outbound connection, so no public Twitch webhook endpoint is required. Twitch tokens are stored in `/app/data/twitch-oauth.json` with file mode `0600`, refreshed when approaching expiry, and intentionally omitted from configuration backups. **Disconnect Twitch** removes the saved OAuth credentials locally.
 
+## Native OBS Stinger transition — v1.2.0
+
+Native Stingers are OBS **Scene Transitions**, not browser-source animations. OBS plays a transparent video across the scene change and cuts internally at a known point. Vice After Dark includes a red-and-white original stinger inspired by the stream's color palette.
+
+### Download and install
+
+1. Rebuild Vice After Dark with `docker compose up -d --build`. The multi-stage Docker build generates `public/assets/stingers/vice-red-stinger.webm` from `scripts/generate-stinger.js`; FFmpeg is included only in the build stage.
+2. Open the dashboard and click **Download Stinger .webm** under **Native OBS Stinger · Red Wipe**. Save it **on the computer running OBS**, not on the Docker server. Alternatively download directly from `http://YOUR-DOCKER-HOST:18787/assets/stingers/vice-red-stinger.webm`.
+3. In OBS Studio → **Scene Transitions** → **+** → **Stinger**, name the new transition `Vice Red Wipe`. Browse to the video file you saved.
+4. Set **Transition Point Type = Time (milliseconds)** and **Transition Point = 800**. Disable **Track Matte**. Leave hardware decoding disabled if transparency is missing; optionally enable **Preload Video to RAM**.
+5. Select the new Stinger from the OBS Scene Transitions dropdown, and use **Preview Transition** or switch between two real OBS scenes to verify.
+
+**Media specification:** 1920×1080, 30 fps, 1,600 milliseconds, VP9/WebM with alpha transparency. First and last video frames are transparent. The screen is fully opaque at the 800 ms cut. Do not re-encode to ordinary MP4/H.264 because that loses transparency.
+
+### Native selection through the dashboard
+
+With OBS WebSocket connected (port 4455), click **Refresh OBS Stingers** to list Stinger transitions you have already created in OBS. Select `Vice Red Wipe` and click **Activate in OBS**. The backend sends OBS WebSocket 5 `GetSceneTransitionList` and `SetCurrentSceneTransition`, then sets Vice After Dark to **Native OBS Stinger** mode, suppressing duplicate browser animations.
+
+**OBS WebSocket cannot create the Stinger, transfer the video to your OBS computer, or override a per-scene transition override automatically.** Initial file selection and the 800 ms transition point must be configured in OBS Studio. When you change scenes in OBS, OBS runs the transition and makes the cut itself.
+
+### Legacy fallback
+
+Choose **Transition playback mode → Legacy browser animation** and save if you want to return to the earlier `/overlay/transition` browser source. The **Test Transition** button previews the old browser animation, not the native OBS scene cut; test native mode by switching scenes in OBS. For native mode, remove or disable the old transition Browser Source in OBS to avoid a duplicate overlay.
+
+Native mode is included in saved presets and backup/restore data. Your Twitch alerts, Weazel ticker, scene mappings, and layouts remain unchanged.
+
 ## Animated scene transitions
 
-Choose **Vice Neon Streak**, **Red Wipe**, or **Soft Fade**, select a duration from **300 to 3000 ms**, and save integration options. Use **Test Transition** to preview the graphic. Scene changes from OBS trigger the overlay effect via the SSE connection. The browser effect overlays the new scene; it is not a native OBS stinger with a configurable cut point.
+Choose **Vice Neon Streak**, **Red Wipe**, or **Soft Fade**, select a duration from **300 to 3000 ms**, and save integration options. Use **Test Transition** to preview the graphic. Scene changes from OBS trigger the overlay effect via the SSE connection **only in legacy browser mode**. The browser effect overlays the new scene; it is not a native OBS stinger with a configurable cut point.
 
 ## Drag-and-resize editor
 

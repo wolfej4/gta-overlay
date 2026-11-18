@@ -27,6 +27,7 @@
     for(const id of ['transitionsEnabled','obsSyncEnabled','twitchAlertsEnabled']){
       $(id).checked=values[id]!==false;
     }
+    $('transitionMode').value=values.transitionMode||'browser';
     $('transitionStyle').value=values.transitionStyle||'neon';
     $('transitionDuration').value=Number(values.transitionDuration)||1200;
     $('transitionDurationLabel').textContent=String($('transitionDuration').value);
@@ -175,6 +176,7 @@
     try{
       const data={
         transitionsEnabled:$('transitionsEnabled').checked,
+        transitionMode:$('transitionMode').value,
         transitionStyle:$('transitionStyle').value,
         transitionDuration:Number($('transitionDuration').value),
         obsSyncEnabled:$('obsSyncEnabled').checked,
@@ -252,8 +254,46 @@
       studioState.mappings=result.mappings;message('OBS scene mappings saved ✓');
     }catch(e){message(e.message,true);}
   });
-  $('refreshConnections').addEventListener('click',refreshConnections);
-  window.addEventListener('vice-studio-unlocked',()=>{refreshStudio();refreshConnections();});
+  async function refreshNativeStingers(){
+    const dropdown=$('nativeObsTransition');
+    if(!api.unlocked())return;
+    try{
+      const data=await request('/api/integrations/native-transitions');
+      const old=dropdown.value;
+      dropdown.replaceChildren();
+      for(const entry of data.transitions||[]){
+        const option=document.createElement('option');option.value=entry.name;option.textContent=entry.name;dropdown.append(option);
+      }
+      if(!dropdown.options.length)dropdown.add(new Option('Create a Stinger transition in OBS first',''));
+      else if((data.transitions||[]).some(t=>t.name===old))dropdown.value=old;
+      else if((data.transitions||[]).some(t=>t.name===data.current))dropdown.value=data.current;
+      $('activateNativeStinger').disabled=!(data.transitions||[]).length;
+      $('nativeStingerStatus').textContent='Current OBS transition: '+(data.current||'None')+' · '+(data.transitions||[]).length+' native Stinger(s) available';
+    }catch(e){
+      dropdown.replaceChildren(new Option('OBS not connected',''));
+      $('activateNativeStinger').disabled=true;
+      $('nativeStingerStatus').textContent='Native Stingers unavailable: '+e.message;
+    }
+  }
+  $('refreshNativeStingers').addEventListener('click',refreshNativeStingers);
+  $('activateNativeStinger').addEventListener('click',async()=>{
+    const name=$('nativeObsTransition').value;
+    if(!name){message('Create and select a native Stinger in OBS first',true);return;}
+    try{
+      await request('/api/integrations/native-transitions','POST',{name});
+      await api.saveSettings({transitionMode:'native'});
+      syncSettingValues(api.settings());
+      await refreshNativeStingers();
+      message('Native OBS Stinger activated; browser animation disabled ✓');
+    }catch(e){message(e.message,true);}
+  });
+  $('transitionMode').addEventListener('change',()=>{
+    $('nativeStingerStatus').textContent=$('transitionMode').value==='native'
+      ? 'Native mode selected. Set up the Stinger in OBS, then activate and save.'
+      : 'Legacy mode selected. The browser overlay will be used after saving.';
+  });
+  $('refreshConnections').addEventListener('click',()=>{refreshConnections();refreshNativeStingers();});
+  window.addEventListener('vice-studio-unlocked',()=>{refreshStudio();refreshConnections();refreshNativeStingers();});
   $('layoutScene').value='gameplay';
   renderLayout();
   syncSettingValues(api.settings());

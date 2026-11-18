@@ -51,7 +51,7 @@ const defaults = {
   showAlert: false, alertTitle: 'BREAKING NEWS', alertText: 'This just in...',
   countdownEnd: null,
   tickerEnabled:true,tickerShowFullScreen:true,tickerMode:'all',tickerSpeed:85,tickerCustom:'',
-  transitionsEnabled:true,transitionStyle:'neon',transitionDuration:1200,
+  transitionsEnabled:true,transitionMode:'browser',transitionStyle:'neon',transitionDuration:1200,
   obsSyncEnabled:true,twitchAlertsEnabled:true,obsSceneMappings:{},layouts:{}
 };
 let stored={};
@@ -128,6 +128,9 @@ function patchSettings(obj) {
     } else if(k==='transitionDuration'){
       if(!Number.isInteger(v)||v<300||v>3000)throw new Error('Transition duration must be 300–3000 ms');
       next.transitionDuration=v;
+    } else if(k==='transitionMode'){
+      if(!['native','browser'].includes(v))throw new Error('Invalid transition mode');
+      next.transitionMode=v;
     } else if(k==='transitionStyle'){
       if(!['neon','wipe','fade'].includes(v))throw new Error('Unknown transition style');
       next.transitionStyle=v;

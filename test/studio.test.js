@@ -81,3 +81,16 @@ test('shuffle-bag displays every headline once per round and avoids adjacent rep
   assert.equal(create([]).next(),null);
   const one={text:'single'};const single=create([one]);assert.equal(single.next(),one);assert.equal(single.next(),one);
 });
+
+test('native Stinger support and mode persist in studio settings',()=>{
+  const server=fs.readFileSync(path.join(__dirname,'../server.js'),'utf8');
+  const integrations=fs.readFileSync(path.join(__dirname,'../integrations.js'),'utf8');
+  const studio=fs.readFileSync(path.join(__dirname,'../studio.js'),'utf8');
+  const Dockerfile=fs.readFileSync(path.join(__dirname,'../Dockerfile'),'utf8');
+  assert.ok(server.includes("transitionMode:'browser'"));
+  assert.ok(server.includes("'native','browser'"));
+  assert.ok(studio.includes("'transitionMode'"));
+  assert.ok(integrations.includes("SetCurrentSceneTransition"));
+  assert.ok(integrations.includes("GetSceneTransitionList"));
+  assert.ok(Dockerfile.includes('build:stinger'));
+});
