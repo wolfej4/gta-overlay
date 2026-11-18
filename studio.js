@@ -5,7 +5,7 @@ const path=require('node:path');
 module.exports=function createStudio({dataDir,getSettings,save,patchSettings,authorized,respond,emit}){
   const presetPath=path.join(dataDir,'presets.json');
   const sceneNames=new Set(['gameplay','cam','alert','starting','brb','ending','socials','ticker','auto','twitch-alerts']);
-  const widgetNames=new Set(['game-header','game-footer','topline','hero','countdown-box','bottomline','ticker-shell','cam','alert','socials-only']);
+  const widgetNames=new Set(['game-header','game-footer','topline','hero','countdown-box','bottomline','ticker-shell','cam','alert','socials-only','twitch-alert-card']);
   const editableKeys=new Set(['channel','handle','subtitle','streamTitle','startingText','brbText','endingText','showGameplayBar','showGameplayFooter','camLabel','camSide','theme','showAlert','alertTitle','alertText','socials','tickerEnabled','tickerShowFullScreen','tickerMode','tickerSpeed','tickerCustom','transitionsEnabled','transitionStyle','transitionDuration','obsSyncEnabled','twitchAlertsEnabled']);
   let presets=[];
   try{const raw=JSON.parse(fs.readFileSync(presetPath,'utf8'));if(Array.isArray(raw))presets=raw.slice(0,20);}catch{}

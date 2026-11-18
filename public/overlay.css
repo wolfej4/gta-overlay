@@ -52,3 +52,23 @@
 .ticker-parody .ticker-topic{color:#fff;border-color:rgba(255,255,255,.7);background:#87111b}
 .ticker-custom .ticker-topic{color:#fff;background:#b20f23}
 .ticker-divider{color:#ff747b;font-size:16px}
+
+/* Animated Browser Source scene changes (transparent until triggered). */
+.scene-transition{position:absolute;inset:0;z-index:80;pointer-events:none;overflow:hidden;--transition-ms:1200ms}
+.transition-sweep{position:absolute;inset:0;display:flex;justify-content:center;align-items:center;overflow:hidden}
+.transition-label{font:900 90px/1 Impact,'Arial Narrow',Arial,sans-serif;color:#fff;letter-spacing:12px;text-shadow:0 10px 30px #12050a;white-space:nowrap}
+.scene-transition-neon .transition-sweep{background:linear-gradient(115deg,#57020f 10%,#e52038 33%,#ff8ea5 50%,#a9031e 70%,#32010d 90%);box-shadow:0 0 110px #ff2964;animation:neonTransition var(--transition-ms) both ease-in-out}
+.scene-transition-wipe .transition-sweep{background:linear-gradient(100deg,#6c071b,#e51c30 60%,#51020c);animation:wipeTransition var(--transition-ms) both ease-in-out}
+.scene-transition-fade .transition-sweep{background:#980b20;animation:fadeTransition var(--transition-ms) both ease-in-out}
+@keyframes neonTransition{0%{transform:translateX(-120%) skewX(-15deg);opacity:.15}34%{opacity:1}50%{transform:translateX(0) skewX(-4deg);opacity:1}100%{transform:translateX(120%) skewX(-15deg);opacity:.15}}
+@keyframes wipeTransition{0%{clip-path:inset(0 100% 0 0)}42%{clip-path:inset(0 0 0 0)}58%{clip-path:inset(0 0 0 0)}100%{clip-path:inset(0 0 0 100%)}}
+@keyframes fadeTransition{0%,100%{opacity:0}35%,65%{opacity:.98}}
+/* Twitch alert notifications. No real events until Twitch OAuth is connected. */
+.twitch-alert-card{position:absolute;top:150px;left:610px;width:700px;min-height:190px;padding:25px 32px;z-index:50;border:3px solid #ff5d88;border-left-width:12px;border-radius:8px;background:linear-gradient(110deg,rgba(28,11,50,.96),rgba(90,11,73,.94));color:#fff;box-shadow:0 16px 60px #0009;animation:twitchEntrance .55s both}
+.twitch-alert-eyebrow{font-size:15px;letter-spacing:4px;font-weight:900;color:#74ebef}
+.twitch-alert-title{font:900 38px/1.15 Impact,'Arial Narrow',Arial,sans-serif;letter-spacing:2px;margin:9px 0}
+.twitch-alert-viewer{font-size:24px;font-weight:900;overflow-wrap:anywhere}
+.twitch-alert-detail{font-size:18px;color:#ffe0f1;margin-top:6px}
+.twitch-alert-card.is-leaving{animation:twitchExit .5s both}
+@keyframes twitchEntrance{from{opacity:0;transform:translateY(-55px) scale(.9)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes twitchExit{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-40px)}}

@@ -1,10 +1,13 @@
 (() => {
   'use strict';
-  const allowed = ['gameplay','cam','starting','brb','ending','alert','socials','ticker'];
+  const allowed = ['gameplay','cam','starting','brb','ending','alert','socials','ticker','auto','transition','twitch-alerts'];
   const scene = location.pathname.split('/').pop();
   if (!allowed.includes(scene)) return;
   const stage = document.querySelector('#stage');
   let settings = {};
+  let activeMode=scene==='auto'?'gameplay':scene;
+  let previewLayout=null;
+  const alerts=[];let alertRunning=false;
   let media={background:false,logo:false};let mediaRev=Date.now();
   // Scales to whatever size OBS/browser viewport is configured to, with a 16:9 design canvas.
   function scale() {
@@ -22,6 +25,48 @@
   };
   const add = (parent, name, cls, value) => { const child = el(name,cls,value); parent.append(child); return child; };
   const text = v => String(v ?? '');
+  function mark(element,key){element.dataset.layoutKey=key;return element;}
+  function applyLayout(){
+    const perScene=previewLayout||settings.layouts?.[activeMode]||{};
+    for(const element of stage.querySelectorAll('[data-layout-key]')){
+      const p=perScene[element.dataset.layoutKey];
+      if(!p)continue;
+      if(![p.x,p.y,p.w,p.h].every(Number.isFinite))continue;
+      Object.assign(element.style,{left:p.x+'px',top:p.y+'px',right:'auto',bottom:'auto',width:p.w+'px',height:p.h+'px',minWidth:'0',maxWidth:'none',transform:'none',margin:'0'});
+    }
+  }
+  addEventListener('message',event=>{
+    if(event.origin!==location.origin||event.source!==parent)return;
+    if(event.data?.type!=='vice-layout-preview'||event.data.scene!==activeMode)return;
+    previewLayout=event.data.widgets;paint();
+  });
+  function transitionEffect(payload){
+    if(scene!=='transition')return;
+    stage.replaceChildren();stage.className='transition-stage';
+    const style=['neon','wipe','fade'].includes(payload.style)?payload.style:'neon';
+    const duration=Math.max(300,Math.min(3000,Number(payload.duration)||1200));
+    const layer=add(stage,'section','scene-transition scene-transition-'+style);
+    layer.style.setProperty('--transition-ms',duration+'ms');
+    const bar=add(layer,'div','transition-sweep');
+    add(bar,'span','transition-label','VICE AFTER DARK');
+    setTimeout(()=>{if(layer.isConnected)layer.remove();},duration+140);
+  }
+  function receiveTwitchAlert(payload){
+    if(scene!=='twitch-alerts'||settings.twitchAlertsEnabled===false)return;
+    alerts.push(payload);if(alerts.length>10)alerts.shift();
+    playTwitchAlert();
+  }
+  function playTwitchAlert(){
+    if(scene!=='twitch-alerts'||alertRunning||!alerts.length)return;
+    alertRunning=true;const data=alerts.shift();
+    const card=mark(add(stage,'section','twitch-alert-card'),'twitch-alert-card');
+    add(card,'div','twitch-alert-eyebrow','VICE CITY SOCIAL CLUB');
+    add(card,'div','twitch-alert-title',String(data.title||'LIVE EVENT').slice(0,45));
+    add(card,'div','twitch-alert-viewer',String(data.viewer||'Viewer').slice(0,65));
+    if(data.detail)add(card,'div','twitch-alert-detail',String(data.detail).slice(0,95));
+    applyLayout();
+    setTimeout(()=>{card.classList.add('is-leaving');setTimeout(()=>{card.remove();alertRunning=false;playTwitchAlert();},530);},6500);
+  }
   const socialLabels={"twitch":"Twitch","youtube":"YouTube","tiktok":"TikTok","instagram":"Instagram","x":"X","discord":"Discord","facebook":"Facebook","kick":"Kick","bluesky":"Bluesky","threads":"Threads","reddit":"Reddit"};
   function socials(parent){
     const accounts=settings.socials && typeof settings.socials==='object'?settings.socials:{twitch:settings.handle||''};
@@ -53,7 +98,7 @@
       if(headline)stories.push({kind:'custom',label:'YOUR HEADLINE',text:headline.slice(0,180)});
     }
     if(stories.length===0)return;
-    const shell=add(parent,'section','ticker-shell');
+    const shell=mark(add(parent,'section','ticker-shell'),'ticker-shell');
     shell.setAttribute('aria-label','Looping Weazel News-inspired GTA universe news ticker');
     const badge=add(shell,'div','ticker-badge');
     add(badge,'span','ticker-badge-dot');
@@ -99,10 +144,10 @@
       ? 'url("/assets/custom/background?v='+mediaRev+'")'
       : 'url("/assets/default-background.webp")';
     add(stage,'div','screen-lines');
-    const top=add(stage,'div','topline');
+    const top=mark(add(stage,'div','topline'),'topline');
     top.style.justifyContent='flex-end';
     const pill=add(top,'div','pill');add(pill,'span','dot');add(pill,'span','', 'VICE CITY // LIVE');
-    const hero=add(stage,'section','hero');
+    const hero=mark(add(stage,'section','hero'),'hero');
     add(hero,'div','eyebrow',type==='starting' ? 'THE STREETS ARE CALLING' : type==='brb' ? 'TAKING A PIT STOP' : 'ANOTHER NIGHT IN VICE CITY');
     const h=add(hero,'h1');
     if(type==='starting') {h.append('STARTING '); add(h,'span','accent','SOON');}
@@ -111,11 +156,11 @@
     add(hero,'div','subtitle',text(type==='starting'?settings.startingText:type==='brb'?settings.brbText:settings.endingText).toUpperCase());
     add(hero,'div','rule');
     if(type==='starting') {
-      const cd=add(stage,'div','countdown-box');
+      const cd=mark(add(stage,'div','countdown-box'),'countdown-box');
       add(cd,'div','tiny-label','HITTING THE STREETS IN');
       add(cd,'div','digits','--:--').id='timer';
     }
-    const bot=add(stage,'div','bottomline');
+    const bot=mark(add(stage,'div','bottomline'),'bottomline');
     brand(bot);
     socials(bot);
     if(settings.tickerShowFullScreen!==false)renderTicker(stage);
@@ -126,36 +171,37 @@
   function gameplay() {
     decorateCorners(); add(stage,'div','rail');add(stage,'div','rail right');
     if(settings.showGameplayBar) {
-      const header=add(stage,'div','game-header');
+      const header=mark(add(stage,'div','game-header'),'game-header');
       if(media.logo){const img=add(header,'img','game-logo');img.src='/assets/custom/logo?v='+mediaRev;img.alt='';}
       add(header,'div','headline',text(settings.channel).toUpperCase());
       add(header,'div','small',text(settings.subtitle).toUpperCase());
     }
     if(settings.showGameplayFooter){
-      const footer=add(stage,'div','game-footer');
+      const footer=mark(add(stage,'div','game-footer'),'game-footer');
       add(footer,'span','footer-title',text(settings.streamTitle).toUpperCase());
       socials(footer);
     }
   }
   function cam() {
-    const c=add(stage,'section','cam '+settings.camSide);
+    const c=mark(add(stage,'section','cam '+settings.camSide),'cam');
     add(c,'div','cam-hole');add(c,'div','cam-top','LIVE // CAM 01');add(c,'div','cam-name',text(settings.camLabel).toUpperCase());
   }
   function alert() {
     if(!settings.showAlert) return;
-    const a=add(stage,'section','alert');
+    const a=mark(add(stage,'section','alert'),'alert');
     add(a,'div','alert-head',text(settings.alertTitle).toUpperCase());
     add(a,'div','alert-body',text(settings.alertText));
   }
   function paint() {
+    if(activeMode==='transition'||activeMode==='twitch-alerts')return;
     stage.replaceChildren();stage.className=settings.theme||'night';
-    if(['starting','brb','ending'].includes(scene)) fullScreen(scene);
-    if(scene==='gameplay') gameplay();
-
-    if(scene==='cam') cam();
-    if(scene==='alert') alert();
-    if(scene==='socials'){const section=add(stage,'section','socials-only');socials(section);}
-    if(scene==='ticker')renderTicker(stage);
+    if(['starting','brb','ending'].includes(activeMode)) fullScreen(activeMode);
+    if(activeMode==='gameplay') gameplay();
+    if(activeMode==='cam') cam();
+    if(activeMode==='alert') alert();
+    if(activeMode==='socials'){const section=mark(add(stage,'section','socials-only'),'socials-only');socials(section);}
+    if(activeMode==='ticker')renderTicker(stage);
+    applyLayout();
     countdown();
   }
   function countdown() {
@@ -170,7 +216,19 @@
   function update(data) {if(data && typeof data==='object'){settings=data;paint();}}
   fetch('/api/settings',{cache:'no-store'}).then(r=>r.json()).then(update).catch(()=>{stage.textContent='Overlay connection unavailable';});
   fetch('/api/assets',{cache:'no-store'}).then(r=>r.json()).then(status=>{media=status;mediaRev=Date.now();paint();}).catch(()=>{});
+  if(scene==='auto'){
+    fetch('/api/integrations/scene',{cache:'no-store'}).then(r=>r.json()).then(data=>{
+      activeMode=data.mode==='none'?'none':(['starting','brb','ending','gameplay','socials','ticker','cam','alert'].includes(data.mode)?data.mode:'gameplay');
+      paint();
+    }).catch(()=>{});
+  }
   const events=new EventSource('/api/events');
   events.addEventListener('settings', ev=>{try {update(JSON.parse(ev.data));}catch{}});
   events.addEventListener('assets',ev=>{try{media=JSON.parse(ev.data);mediaRev=Date.now();paint();}catch{}});
+  events.addEventListener('scene',ev=>{if(scene!=='auto')return;try{
+    const data=JSON.parse(ev.data);activeMode=data.mode==='none'?'none':(['starting','brb','ending','gameplay','socials','ticker','cam','alert'].includes(data.mode)?data.mode:'gameplay');
+    previewLayout=null;paint();
+  }catch{}});
+  events.addEventListener('transition',ev=>{try{transitionEffect(JSON.parse(ev.data));}catch{}});
+  events.addEventListener('twitch-alert',ev=>{try{receiveTwitchAlert(JSON.parse(ev.data));}catch{}});
 })();
