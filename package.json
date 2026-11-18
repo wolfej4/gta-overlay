@@ -1,6 +1,6 @@
 {
   "name": "vice-after-dark-obs-overlays",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "private": true,
   "description": "A self-hosted OBS browser-source overlay set with live control panel",
   "scripts": {

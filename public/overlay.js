@@ -49,9 +49,9 @@
     add(stage,'div','screen-lines');
     const top=add(stage,'div','topline');
     top.style.justifyContent='flex-end';
-    const pill=add(top,'div','pill');add(pill,'span','dot');add(pill,'span','', 'VICE CITY // 06');
+    const pill=add(top,'div','pill');add(pill,'span','dot');add(pill,'span','', 'VICE CITY // LIVE');
     const hero=add(stage,'section','hero');
-    add(hero,'div','eyebrow',type==='starting' ? 'A new transmission is loading' : type==='brb' ? 'Signal temporarily interrupted' : 'Transmission complete');
+    add(hero,'div','eyebrow',type==='starting' ? 'THE STREETS ARE CALLING' : type==='brb' ? 'TAKING A PIT STOP' : 'ANOTHER NIGHT IN VICE CITY');
     const h=add(hero,'h1');
     if(type==='starting') {h.append('STARTING '); add(h,'span','accent','SOON');}
     if(type==='brb') {h.append('BE RIGHT ');add(h,'span','accent','BACK');}
@@ -60,7 +60,7 @@
     add(hero,'div','rule');
     if(type==='starting') {
       const cd=add(stage,'div','countdown-box');
-      add(cd,'div','tiny-label','TRANSMISSION BEGINS IN');
+      add(cd,'div','tiny-label','HITTING THE STREETS IN');
       add(cd,'div','digits','--:--').id='timer';
     }
     const bot=add(stage,'div','bottomline');

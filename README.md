@@ -4,7 +4,7 @@ A **self-hosted**, GTA VI / Vice City-inspired, animated browser-source overlay 
 
 ## Versioning
 
-The app version is stored in **`package.json`** (now **v1.0.4**) and displayed on the dashboard sidebar. The server also provides `GET /api/version`, which returns the installed version. For ordinary feature/fix updates pushed to `main`, the GitHub Actions workflow `.github/workflows/auto-version.yml` automatically increases the **patch** component (for example, `1.0.1` → `1.0.2`) and commits the new version back to `main`. Each push to `main` creates one patch release; a batch of edits in one push is treated as one update. Its own version-bump commits use `[skip version]` so the workflow cannot loop.
+The app version is stored in **`package.json`** (now **v1.0.5**) and displayed on the dashboard sidebar. The server also provides `GET /api/version`, which returns the installed version. For ordinary feature/fix updates pushed to `main`, the GitHub Actions workflow `.github/workflows/auto-version.yml` automatically increases the **patch** component (for example, `1.0.1` → `1.0.2`) and commits the new version back to `main`. Each push to `main` creates one patch release; a batch of edits in one push is treated as one update. Its own version-bump commits use `[skip version]` so the workflow cannot loop.
 
 This automation requires **GitHub Actions enabled** and a workflow token allowed to write repository contents (Settings → Actions → General → Workflow permissions). If an Actions workflow fails, the version will remain unchanged until the permission or failure is resolved. For intentional breaking releases, bump the major or minor component manually and include `[skip version]` in the commit message to keep the chosen number.
 
@@ -21,6 +21,13 @@ In **Background & logo**, you can optionally upload PNG, JPEG or WebP images (up
 The full-screen footer now displays the editable Channel Name, not a hardcoded ArcadeTimeTV brand. All dropdowns match the height and width of text inputs. The Dispatch/Wanted source and star quick action have been removed. This release is **v1.0.2**.
 
 The top-left channel-name label has been removed from the Starting Soon, BRB, and Stream Ending scenes (v1.0.3). The top-right Vice City pill remains right-aligned, and bottom branding still uses the configurable channel name.
+
+### v1.0.5 — Live status and Vice City copy
+
+- The top-right label now reads **VICE CITY // LIVE** instead of `VICE CITY // 06`. This is a decorative label, not a stream-status integration.
+- Starting Soon now says **THE STREETS ARE CALLING**, with a countdown labeled **HITTING THE STREETS IN**.
+- BRB says **TAKING A PIT STOP**; Ending says **ANOTHER NIGHT IN VICE CITY**.
+- Existing custom starting/BRB/ending subtitle settings remain editable in the dashboard.
 
 ## Overlays
 
