@@ -18,6 +18,8 @@ In **Background & logo**, upload PNG, JPEG or WebP images (up to 8 MB each). The
 
 The full-screen footer now displays the editable Channel Name, not a hardcoded ArcadeTimeTV brand. All dropdowns match the height and width of text inputs. The Dispatch/Wanted source and star quick action have been removed. This release is **v1.0.2**.
 
+The top-left channel-name label has been removed from the Starting Soon, BRB, and Stream Ending scenes (v1.0.3). The top-right Vice City pill remains right-aligned, and bottom branding still uses the configurable channel name.
+
 ## Overlays
 
 | Scene | OBS URL | Background |

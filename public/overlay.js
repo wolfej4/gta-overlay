@@ -46,7 +46,7 @@
     add(stage,'div','palm left'); add(stage,'div','palm right');
     add(stage,'div','sun-glow'); add(stage,'div','screen-lines');
     const top=add(stage,'div','topline');
-    add(top,'div','',text(settings.channel).toUpperCase());
+    top.style.justifyContent='flex-end';
     const pill=add(top,'div','pill');add(pill,'span','dot');add(pill,'span','', 'VICE CITY // 06');
     const hero=add(stage,'section','hero');
     add(hero,'div','eyebrow',type==='starting' ? 'A new transmission is loading' : type==='brb' ? 'Signal temporarily interrupted' : 'Transmission complete');
