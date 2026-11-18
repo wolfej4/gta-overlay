@@ -4,7 +4,7 @@ A **self-hosted**, GTA VI / Vice City-inspired, animated browser-source overlay 
 
 ## Versioning
 
-The app version is stored in **`package.json`** (now **v1.0.8**) and displayed on the dashboard sidebar. The server also provides `GET /api/version`, which returns the installed version. For ordinary feature/fix updates pushed to `main`, the GitHub Actions workflow `.github/workflows/auto-version.yml` automatically increases the **patch** component (for example, `1.0.1` → `1.0.2`) and commits the new version back to `main`. Each push to `main` creates one patch release; a batch of edits in one push is treated as one update. Its own version-bump commits use `[skip version]` so the workflow cannot loop.
+The app version is stored in **`package.json`** (now **v1.1.0**) and displayed on the dashboard sidebar. The server also provides `GET /api/version`, which returns the installed version. For ordinary feature/fix updates pushed to `main`, the GitHub Actions workflow `.github/workflows/auto-version.yml` automatically increases the **patch** component (for example, `1.0.1` → `1.0.2`) and commits the new version back to `main`. Each push to `main` creates one patch release; a batch of edits in one push is treated as one update. Its own version-bump commits use `[skip version]` so the workflow cannot loop.
 
 This automation requires **GitHub Actions enabled** and a workflow token allowed to write repository contents (Settings → Actions → General → Workflow permissions). If an Actions workflow fails, the version will remain unchanged until the permission or failure is resolved. For intentional breaking releases, bump the major or minor component manually and include `[skip version]` in the commit message to keep the chosen number.
 
@@ -28,6 +28,22 @@ The top-left channel-name label has been removed from the Starting Soon, BRB, an
 - Starting Soon now says **THE STREETS ARE CALLING**, with a countdown labeled **HITTING THE STREETS IN**.
 - BRB says **TAKING A PIT STOP**; Ending says **ANOTHER NIGHT IN VICE CITY**.
 - Existing custom starting/BRB/ending subtitle settings remain editable in the dashboard.
+
+## Studio integration release — v1.1.0
+
+This release adds five optional features: **Twitch EventSub alerts** for follows, subscribers, cheers and raids; **OBS WebSocket 5 scene sync** using `/overlay/auto`; **animated browser-source transitions** using `/overlay/transition`; a **drag-and-resize layout editor**; and **named presets plus complete JSON backup/restore**.
+
+New 1920×1080 Browser Sources:
+
+- `/overlay/auto` — follows the active OBS program scene (starting, BRB, ending or gameplay), respecting configurable scene mappings.
+- `/overlay/transition` — animated neon / wipe / fade on OBS scene changes; add a common referenced Browser Source across OBS scenes.
+- `/overlay/twitch-alerts` — new follower, subscriber, incoming raid and Bits-cheer alert cards.
+
+All three overlays have transparent backgrounds when idle where appropriate. Existing overlays and the red Weazel News ticker remain available. Scene sync **reads the OBS program scene**, it does not switch scenes in OBS. Animated overlays are not native OBS stinger transitions.
+
+**Configuration:** copy `.env.example` to an untracked `.env` file, set OBS WebSocket and Twitch credentials, then rebuild the Docker service. OAuth credentials remain on your Docker host. Twitch needs an OAuth application with the exact redirect URI ending `/api/integrations/twitch-callback` and, outside localhost development, an HTTPS URL. Use the dashboard to authorize Twitch, see OBS connection status, map OBS scenes, test alerts/transitions, edit positions, and save presets or backup files.
+
+**Full setup guide:** [`docs/STUDIO.md`](docs/STUDIO.md). Run `npm test` for basic server/API verification. These integrations require actual OBS and Twitch accounts/devices for live end-to-end testing.
 
 ## Weazel News ticker — v1.0.8
 

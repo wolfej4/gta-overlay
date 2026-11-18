@@ -1,4 +1,7 @@
-data/*
-!data/.gitkeep
+.env
+.env.*
+!.env.example
+data/
+*.log
+.DS_Store
 node_modules/
-*.zip

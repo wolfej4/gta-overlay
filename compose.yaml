@@ -6,6 +6,12 @@ services:
     environment:
       ADMIN_PASSWORD: "SET_A_LONG_RANDOM_PASSWORD"
       PORT: "8787"
+      # Optional integrations (provide values in local .env / Dockhand secrets)
+      TWITCH_CLIENT_ID: "${TWITCH_CLIENT_ID:-}"
+      TWITCH_CLIENT_SECRET: "${TWITCH_CLIENT_SECRET:-}"
+      TWITCH_REDIRECT_URI: "${TWITCH_REDIRECT_URI:-}"
+      OBS_WS_URL: "${OBS_WS_URL:-}"
+      OBS_WS_PASSWORD: "${OBS_WS_PASSWORD:-}"
     ports:
       - "${OVERLAY_HOST_PORT:-18787}:8787"
     volumes:
