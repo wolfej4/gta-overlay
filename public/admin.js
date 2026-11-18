@@ -42,15 +42,43 @@
   function resizePreview(){const w=box.clientWidth;iframe.style.transform=`scale(${w/1920})`;}
   if('ResizeObserver' in window)new ResizeObserver(resizePreview).observe(box);
   addEventListener('resize',resizePreview);resizePreview();
-  function sceneChange(scene){current=scene;iframe.src='/overlay/'+scene;setText('previewTitle',names[scene]);document.querySelectorAll('#sceneNav button').forEach(b=>b.classList.toggle('selected',b.dataset.scene===scene));}
+  function obsUrl(scene){return location.origin+'/overlay/'+scene;}
+  const previewUrl=$('selectedObsUrl');
+  function selectUrl(input){input.focus();input.select();input.setSelectionRange(0,input.value.length);}
+  function sceneChange(scene){
+    current=scene;iframe.src='/overlay/'+scene;previewUrl.value=obsUrl(scene);
+    setText('previewTitle',names[scene]);
+    document.querySelectorAll('#sceneNav button').forEach(b=>b.classList.toggle('selected',b.dataset.scene===scene));
+  }
   document.querySelectorAll('#sceneNav button').forEach(b=>b.addEventListener('click',()=>sceneChange(b.dataset.scene)));
-  function copy(s,button){navigator.clipboard.writeText(s).then(()=>{const orig=button.textContent;button.textContent='Copied ✓';setTimeout(()=>button.textContent=orig,1200)}).catch(()=>prompt('Copy this URL:',s));}
-  $('copyUrl').addEventListener('click',()=>copy(location.origin+'/overlay/'+current,$('copyUrl')));
+  async function copy(s,button,input){
+    const orig=button.textContent;
+    let copied=false;
+    try{
+      if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(s);copied=true;}
+    }catch{}
+    if(!copied){
+      selectUrl(input);
+      try{copied=document.execCommand('copy');}catch{}
+    }
+    button.textContent=copied?'Copied ✓':'Selected — press Ctrl+C / ⌘C';
+    setTimeout(()=>{button.textContent=orig;},2400);
+  }
+  previewUrl.value=obsUrl(current);
+  previewUrl.addEventListener('click',()=>selectUrl(previewUrl));
+  $('copyUrl').addEventListener('click',()=>copy(obsUrl(current),$('copyUrl'),previewUrl));
   const urls=$('urlList');
   Object.entries(names).forEach(([key,label])=>{
     const item=document.createElement('div');item.className='url-item';
-    const intro=document.createElement('div');const b=document.createElement('b');b.textContent=label;const small=document.createElement('small');small.textContent=location.origin+'/overlay/'+key;intro.append(b,small);
-    const button=document.createElement('button');button.textContent='COPY';button.type='button';button.addEventListener('click',()=>copy(small.textContent,button));item.append(intro,button);urls.append(item);
+    const heading=document.createElement('b');heading.textContent=label;
+    const row=document.createElement('div');row.className='url-input-row';
+    const input=document.createElement('textarea');input.className='obs-url-field';
+    input.rows=2;input.readOnly=true;input.spellcheck=false;input.value=obsUrl(key);
+    input.setAttribute('aria-label',label+' OBS URL');
+    input.addEventListener('click',()=>selectUrl(input));
+    const button=document.createElement('button');button.textContent='Copy URL';button.type='button';
+    button.addEventListener('click',()=>copy(input.value,button,input));
+    row.append(input,button);item.append(heading,row);urls.append(item);
   });
   fetch('/api/settings').then(r=>r.json()).then(v=>{render(v,true);say('Viewing live settings');}).catch(()=>say('Unable to fetch settings',true));
   const sse=new EventSource('/api/events');sse.addEventListener('settings',e=>{try{render(JSON.parse(e.data));}catch{}});
