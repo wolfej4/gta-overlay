@@ -23,6 +23,7 @@ The dispatch stars, location, and mission are **manually controlled** from the d
 3. In Dockhand, create a new stack using the `compose.yaml` and provide the project directory as build context (or on the CLI run `docker compose up -d --build` inside the folder). This Compose file uses `build: .`, so the entire project directory is needed, not only the YAML contents. If your Dockhand installation doesn't support local build contexts in the stack UI, run the CLI build on that host and then deploy the image through Dockhand.
 4. Open `http://YOUR-DOCKER-IP:18787/admin` to see the control panel.
 5. Click **Unlock Editing** and enter your password. Change the theme, labels, six-star meter, and countdown. Press **Save & Broadcast**. Connected overlays update immediately via Server-Sent Events.
+6. The **OBS URL for the selected scene** appears directly under its live preview. Click the URL to select it and copy it with **Ctrl+C** (Windows) or **⌘C** (Mac), or use the **Copy OBS URL** button. All seven OBS URLs are also displayed in full under **Browser Source URLs**; you can select or copy each one individually. If your browser blocks clipboard access over HTTP, clicking the URL still lets you select and copy it manually.
 
 
 ### Host port (default: 18787)
