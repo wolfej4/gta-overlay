@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const names = {gameplay:'Gameplay HUD',cam:'Webcam Frame',alert:'Announcement',starting:'Starting Soon',brb:'Be Right Back',ending:'Stream Ending',socials:'Socials Only'};
+  const names = {gameplay:'Gameplay HUD',cam:'Webcam Frame',alert:'Announcement',starting:'Starting Soon',brb:'Be Right Back',ending:'Stream Ending',socials:'Socials Only',ticker:'News Ticker'};
   const $=id=>document.getElementById(id);
   const platformLabels={"twitch":"Twitch","youtube":"YouTube","tiktok":"TikTok","instagram":"Instagram","x":"X","discord":"Discord","facebook":"Facebook","kick":"Kick","bluesky":"Bluesky","threads":"Threads","reddit":"Reddit"};
   const socialInputs=Object.entries(platformLabels).map(([key,label])=>{
@@ -12,6 +12,8 @@
     wrap.append(title,input);$('socialFields').append(wrap);return input;
   });
   const fields=[...document.querySelectorAll('[data-field]')];
+  setTextPlaceholder();
+  function setTextPlaceholder(){$('tickerStoryCount').textContent=String(window.VICE_TICKER_ITEMS?.length||193);}
   let latest={};let auth=null;let editing=false;let dirty=false;let current='gameplay';
   function say(message,error=false){$('saveState').textContent=message;$('saveState').style.color=error?'#ff98b8':'';}
   const setText = (id, value) => $(id).textContent=value;
@@ -22,8 +24,9 @@
       socialInputs.forEach(f=>f.value=values.socials?.[f.dataset.social]||'');
       dirty=false;
     }
+    if(!dirty||force)setText('tickerSpeedValue',String(values.tickerSpeed??85));
   }
-  function dirtyChange(){dirty=true;say('Unsaved edits');}
+  function dirtyChange(){dirty=true;say('Unsaved edits');setText('tickerSpeedValue',$('tickerSpeed').value);}
   [...fields,...socialInputs].forEach(f=>{f.addEventListener('input',dirtyChange);f.addEventListener('change',dirtyChange);});
   function authHeaders(){return auth?{'Authorization':'Basic '+btoa('admin:'+auth)}:{}}
   async function save(url,body){

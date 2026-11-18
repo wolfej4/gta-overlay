@@ -49,7 +49,8 @@ const defaults = {
   camLabel: 'ARCADE CAM', camSide: 'right',
   theme: 'night',
   showAlert: false, alertTitle: 'BREAKING NEWS', alertText: 'This just in...',
-  countdownEnd: null
+  countdownEnd: null,
+  tickerEnabled:true,tickerShowFullScreen:true,tickerMode:'all',tickerSpeed:85,tickerCustom:''
 };
 let stored={};
 try{stored=JSON.parse(fs.readFileSync(SETTINGS_FILE,'utf8'));}catch{}
@@ -101,8 +102,8 @@ function getBody(req) {
   });
 }
 const maxString = {channel:42, handle:42, subtitle:56, streamTitle:72, startingText:90,
-  brbText:90, endingText:90,camLabel:48,alertTitle:50,alertText:130};
-const boolKeys = new Set(['showGameplayBar','showGameplayFooter','showAlert']);
+  brbText:90, endingText:90,camLabel:48,alertTitle:50,alertText:130,tickerCustom:6000};
+const boolKeys = new Set(['showGameplayBar','showGameplayFooter','showAlert','tickerEnabled','tickerShowFullScreen']);
 function patchSettings(obj) {
   if (!obj || Array.isArray(obj) || typeof obj !== 'object') throw new Error('Expected an object');
   const next = {...settings};
@@ -121,6 +122,12 @@ function patchSettings(obj) {
         accounts[platform]=handle.trim().slice(0,100);
       }
       next.socials=accounts;
+    } else if(k==='tickerSpeed'){
+      if(!Number.isInteger(v)||v<35||v>160)throw new Error('Ticker speed must be 35–160 pixels/second');
+      next.tickerSpeed=v;
+    } else if(k==='tickerMode'){
+      if(!['all','lore','parody'].includes(v))throw new Error('Invalid ticker mode');
+      next.tickerMode=v;
     } else if (k === 'camSide') {
       if (!['left','right'].includes(v)) throw new Error('Invalid camSide');
       next[k] = v;
@@ -145,14 +152,14 @@ function file(res, name, type) {
 const routes = {
   '/':'admin.html', '/admin':'admin.html',
   '/admin.css':'admin.css', '/admin.js':'admin.js',
-  '/overlay.css':'overlay.css', '/overlay.js':'overlay.js',
+  '/overlay.css':'overlay.css', '/overlay.js':'overlay.js', '/ticker-data.js':'ticker-data.js',
   '/assets/skyline.svg':'assets/skyline.svg',
   '/assets/palm.svg':'assets/palm.svg',
   '/assets/default-background.webp':'assets/default-background.webp'
 };
 for(const p of SOCIAL_PLATFORMS)routes['/assets/social/'+p+'.svg']='assets/social/'+p+'.svg';
 const types = {html:'text/html; charset=utf-8', css:'text/css; charset=utf-8', js:'application/javascript; charset=utf-8', svg:'image/svg+xml', webp:'image/webp'};
-const overlays = new Set(['gameplay','cam','starting','brb','ending','alert','socials']);
+const overlays = new Set(['gameplay','cam','starting','brb','ending','alert','socials','ticker']);
 const server = http.createServer(async (req,res) => {
   const url = new URL(req.url, 'http://localhost');
   const p = url.pathname;

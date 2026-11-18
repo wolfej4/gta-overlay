@@ -1,4 +1,4 @@
-/* Curated lore (based on official Rockstar descriptions) and clearly labeled fan parody. No live news feed. */
+/* Curated lore based on Rockstar releases; separately labeled original parody. Static editorial content, NOT live news. */
 window.VICE_TICKER_ITEMS = [
   {
     "kind": "lore",
@@ -9,6 +9,21 @@ window.VICE_TICKER_ITEMS = [
     "kind": "parody",
     "label": "PARODY · VICE CITY",
     "text": "Parking officers ask residents to stop treating sidewalks as optional driving lanes"
+  },
+  {
+    "kind": "lore",
+    "label": "GTA VI",
+    "text": "Weazel News appears in GTA VI's reveal trailer, covering trouble on Vice City roads"
+  },
+  {
+    "kind": "lore",
+    "label": "GTA VI",
+    "text": "The original GTA VI trailer shows Weazel News reporting on motorbike chaos in Vice City"
+  },
+  {
+    "kind": "lore",
+    "label": "GTA VI",
+    "text": "A TV news bulletin in GTA VI's reveal footage features the familiar Weazel News branding"
   },
   {
     "kind": "lore",
@@ -802,7 +817,7 @@ window.VICE_TICKER_ITEMS = [
   },
   {
     "kind": "parody",
-    "label": "PARODY · LEONIDA PARODY",
+    "label": "PARODY · LEONIDA",
     "text": "Swamp tour guide asks guests to stop rating alligators on customer service"
   },
   {
@@ -812,7 +827,7 @@ window.VICE_TICKER_ITEMS = [
   },
   {
     "kind": "parody",
-    "label": "PARODY · LEONIDA PARODY",
+    "label": "PARODY · LEONIDA",
     "text": "Keys marina issues reminder that boat horns do not count as reservations"
   },
   {
@@ -822,7 +837,7 @@ window.VICE_TICKER_ITEMS = [
   },
   {
     "kind": "parody",
-    "label": "PARODY · LEONIDA PARODY",
+    "label": "PARODY · LEONIDA",
     "text": "Leonida wildlife hotline reports a record number of 'is that a gator?' calls"
   },
   {
@@ -832,7 +847,7 @@ window.VICE_TICKER_ITEMS = [
   },
   {
     "kind": "parody",
-    "label": "PARODY · LEONIDA PARODY",
+    "label": "PARODY · LEONIDA",
     "text": "Restaurant announces a new seasonal menu inspired by questionable beach snacks"
   },
   {
@@ -842,7 +857,7 @@ window.VICE_TICKER_ITEMS = [
   },
   {
     "kind": "parody",
-    "label": "PARODY · LEONIDA PARODY",
+    "label": "PARODY · LEONIDA",
     "text": "A social-media star tries to trademark the phrase 'accidentally went viral'"
   },
   {
@@ -852,7 +867,7 @@ window.VICE_TICKER_ITEMS = [
   },
   {
     "kind": "parody",
-    "label": "PARODY · LEONIDA PARODY",
+    "label": "PARODY · LEONIDA",
     "text": "Boatyard owner says unpaid parking tickets are a land-based problem"
   },
   {
@@ -862,7 +877,7 @@ window.VICE_TICKER_ITEMS = [
   },
   {
     "kind": "parody",
-    "label": "PARODY · LEONIDA PARODY",
+    "label": "PARODY · LEONIDA",
     "text": "Port Gellhorn truck stop now sells road maps with fewer judgmental comments"
   },
   {
@@ -872,7 +887,7 @@ window.VICE_TICKER_ITEMS = [
   },
   {
     "kind": "parody",
-    "label": "PARODY · LEONIDA PARODY",
+    "label": "PARODY · LEONIDA",
     "text": "Grassrivers birdwatcher reports that the birds have begun watching back"
   },
   {
@@ -882,7 +897,7 @@ window.VICE_TICKER_ITEMS = [
   },
   {
     "kind": "parody",
-    "label": "PARODY · LEONIDA PARODY",
+    "label": "PARODY · LEONIDA",
     "text": "An inflatable flamingo briefly shut down a marina security checkpoint"
   },
   {
@@ -892,7 +907,7 @@ window.VICE_TICKER_ITEMS = [
   },
   {
     "kind": "parody",
-    "label": "PARODY · LEONIDA PARODY",
+    "label": "PARODY · LEONIDA",
     "text": "Mountain trail guide says hiking boots are not suitable for getaway driving"
   },
   {
@@ -902,52 +917,52 @@ window.VICE_TICKER_ITEMS = [
   },
   {
     "kind": "parody",
-    "label": "PARODY · LEONIDA PARODY",
+    "label": "PARODY · LEONIDA",
     "text": "State tourism slogan updated to 'Visit Leonida, check your insurance'"
   },
   {
     "kind": "parody",
-    "label": "PARODY · LEONIDA PARODY",
+    "label": "PARODY · LEONIDA",
     "text": "A car wash launches a loyalty program for vehicles arriving without doors"
   },
   {
     "kind": "parody",
-    "label": "PARODY · LEONIDA PARODY",
+    "label": "PARODY · LEONIDA",
     "text": "Local fishermen debate whether a stolen jetski counts as freshwater wildlife"
   },
   {
     "kind": "parody",
-    "label": "PARODY · LEONIDA PARODY",
+    "label": "PARODY · LEONIDA",
     "text": "Beach vendor now accepts sunglasses as payment, subject to condition"
   },
   {
     "kind": "parody",
-    "label": "PARODY · LEONIDA PARODY",
+    "label": "PARODY · LEONIDA",
     "text": "Leonida motorists petition for an express lane reserved for bad decisions"
   },
   {
     "kind": "parody",
-    "label": "PARODY · LEONIDA PARODY",
+    "label": "PARODY · LEONIDA",
     "text": "One town's annual parade now includes an unplanned police escort"
   },
   {
     "kind": "parody",
-    "label": "PARODY · LEONIDA PARODY",
+    "label": "PARODY · LEONIDA",
     "text": "Swamp-themed escape room admits every emergency exit is a real one"
   },
   {
     "kind": "parody",
-    "label": "PARODY · LEONIDA PARODY",
+    "label": "PARODY · LEONIDA",
     "text": "Roadside stand advertises 'fresh oranges and loosely sourced rumors'"
   },
   {
     "kind": "parody",
-    "label": "PARODY · LEONIDA PARODY",
+    "label": "PARODY · LEONIDA",
     "text": "Local radio station asks callers to distinguish 'sighting' from 'conspiracy'"
   },
   {
     "kind": "parody",
-    "label": "PARODY · LEONIDA PARODY",
+    "label": "PARODY · LEONIDA",
     "text": "Waterfront hotel markets its rooftop as 'helicopter-adjacent'"
   }
 ];
