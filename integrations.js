@@ -13,7 +13,48 @@ module.exports=function createIntegrations({dataDir,getSettings,authorized,respo
   const validModes=new Set(['gameplay','cam','starting','brb','ending','alert','socials','ticker','twitch-alerts','none']);
   const status={obs:{connected:false,scenes:[],scene:'',error:''},twitch:{connected:false,user:'',error:'',subscriptions:[]}};
   let activeMode='gameplay',oauthState=null,oauthExpiry=0,tokens=null,twitchWS=null,obsWS=null,stopped=false;
-  let twitchTimer=null,obsTimer=null,refreshTimer=null;const seen=new Set();
+  let twitchTimer=null,obsTimer=null,refreshTimer=null;const seen=new Set(),obsPending=new Map();
+  function rejectPendingObs(message){
+    for(const p of obsPending.values()){clearTimeout(p.deadline);p.reject(Error(message));}
+    obsPending.clear();
+  }
+  function obsRequest(requestType,requestData){
+    const socket=obsWS;
+    if(!status.obs.connected || !socket || socket.readyState!==1)throw Error('OBS WebSocket is not connected');
+    const requestId=crypto.randomUUID();
+    return new Promise((resolve,reject)=>{
+      const deadline=timer(()=>{
+        obsPending.delete(requestId);
+        reject(Error('OBS request timed out: '+requestType));
+      },7000);
+      obsPending.set(requestId,{resolve,reject,deadline});
+      try{socket.send(JSON.stringify({op:6,d:{requestId,requestType,...(requestData?{requestData}:{})}}));}
+      catch(e){clearTimeout(deadline);obsPending.delete(requestId);reject(e);}
+    });
+  }
+  // OBS WebSocket supports selecting a native Stinger, not creating or installing one.
+  async function listNativeTransitions(){
+    const result=await obsRequest('GetSceneTransitionList');
+    return {current:result.currentSceneTransitionName||'',
+      transitions:(result.transitions||[])
+        .filter(t=>/stinger/i.test(t.transitionKind||''))
+        .map(t=>({name:t.transitionName,kind:t.transitionKind}))};
+  }
+  async function activateNativeTransition(name){
+    if(typeof name!=='string'||!name.trim()||name.length>100)throw Error('Select an OBS Stinger transition');
+    const available=await listNativeTransitions();
+    if(!available.transitions.some(t=>t.name===name))throw Error('Create a Stinger in OBS Studio and refresh the list');
+    await obsRequest('SetCurrentSceneTransition',{transitionName:name});
+    return listNativeTransitions();
+  }
+  function readSmallJSON(req){
+    return new Promise((resolve,reject)=>{
+      let size=0,large=false;const chunks=[];
+      req.on('data',part=>{size+=part.length;if(size>2048)large=true;else chunks.push(part);});
+      req.on('end',()=>{if(large)return reject(Error('Request too large'));try{resolve(JSON.parse(Buffer.concat(chunks).toString('utf8')));}catch{reject(Error('Invalid JSON'));}});
+      req.on('error',reject);
+    });
+  }
   try{tokens=JSON.parse(fs.readFileSync(tokenFile,'utf8'));}catch{}
   function summary(){return {obs:{...status.obs,configured:!!obsAddress},twitch:{...status.twitch,configured:!!(clientId&&clientSecret&&redirectUri),authorized:!!tokens?.access_token},mode:activeMode};}
   function notifyStatus(){emit('integrations',summary());}
@@ -54,7 +95,7 @@ module.exports=function createIntegrations({dataDir,getSettings,authorized,respo
   }
   function emitTransition(){
     const settings=getSettings();
-    if(settings.transitionsEnabled===false)return;
+    if(settings.transitionsEnabled===false || settings.transitionMode==='native')return;
     emit('transition',{id:crypto.randomUUID(),style:settings.transitionStyle||'neon',duration:settings.transitionDuration||1200});
   }
   function setOBSScene(scene,initial=false){
@@ -69,6 +110,7 @@ module.exports=function createIntegrations({dataDir,getSettings,authorized,respo
   function connectOBS(){
     clearTimeout(obsTimer);if(stopped||!obsAddress)return;
     if(!/^wss?:\/\/[^/]+/i.test(obsAddress)){status.obs.error='Use a ws:// or wss:// OBS URL';notifyStatus();return;}
+    rejectPendingObs('OBS connection replaced');
     close(obsWS);
     let socket;
     try{socket=new WebSocket(obsAddress);}catch(e){status.obs.error=e.message;scheduleOBS();return;}
@@ -87,6 +129,11 @@ module.exports=function createIntegrations({dataDir,getSettings,authorized,respo
       }else if(packet.op===2){
         status.obs.connected=true;status.obs.error='';notifyStatus();
         socket.send(JSON.stringify({op:6,d:{requestId:crypto.randomUUID(),requestType:'GetSceneList'}}));
+      }else if(packet.op===7&&obsPending.has(packet.d?.requestId)){
+        const pending=obsPending.get(packet.d.requestId);
+        obsPending.delete(packet.d.requestId);clearTimeout(pending.deadline);
+        if(packet.d.requestStatus?.result)pending.resolve(packet.d.responseData||{});
+        else pending.reject(Error(packet.d.requestStatus?.comment||'OBS rejected '+packet.d.requestType));
       }else if(packet.op===7&&packet.d?.requestType==='GetSceneList'){
         if(!packet.d.requestStatus?.result){status.obs.error=packet.d.requestStatus?.comment||'Could not read OBS scenes';notifyStatus();return;}
         status.obs.scenes=(packet.d.responseData?.scenes||[]).map(s=>s.sceneName).filter(Boolean);
@@ -99,7 +146,7 @@ module.exports=function createIntegrations({dataDir,getSettings,authorized,respo
       }
     });
     socket.addEventListener('error',()=>{if(obsWS===socket){status.obs.error='OBS connection failed';notifyStatus();}});
-    socket.addEventListener('close',()=>{if(obsWS!==socket)return;status.obs.connected=false;notifyStatus();scheduleOBS();});
+    socket.addEventListener('close',()=>{if(obsWS!==socket)return;rejectPendingObs('OBS disconnected');status.obs.connected=false;notifyStatus();scheduleOBS();});
   }
   function scheduleTwitch(){clearTimeout(twitchTimer);if(!stopped&&tokens&&clientId)twitchTimer=timer(()=>startTwitch().catch(e=>{status.twitch.error=e.message;notifyStatus();scheduleTwitch();}),12000);}
   function handleTwitchNotification(packet){
@@ -201,6 +248,11 @@ module.exports=function createIntegrations({dataDir,getSettings,authorized,respo
       if(!authorized(req))return respond(res,401,{error:'Admin password required'});
       if(req.method!=='GET'&&req.headers.origin&&req.headers.origin!=='http://'+req.headers.host&&req.headers.origin!=='https://'+req.headers.host)return respond(res,403,{error:'Cross-origin updates are not allowed'});
       if(p==='/api/integrations/status'&&req.method==='GET')return respond(res,200,summary());
+      if(p==='/api/integrations/native-transitions'&&req.method==='GET')return respond(res,200,await listNativeTransitions());
+      if(p==='/api/integrations/native-transitions'&&req.method==='POST'){
+        const data=await readSmallJSON(req);
+        return respond(res,200,await activateNativeTransition(data?.name));
+      }
       if(p==='/api/integrations/twitch-connect'&&req.method==='GET')return respond(res,200,{url:await beginTwitchAuth()});
       if(p==='/api/integrations/twitch-disconnect'&&req.method==='POST'){disconnect();return respond(res,200,summary());}
       if(p==='/api/integrations/test-alert'&&req.method==='POST'){
@@ -212,7 +264,7 @@ module.exports=function createIntegrations({dataDir,getSettings,authorized,respo
     })().catch(e=>{if(!res.headersSent)respond(res,400,{error:e.message});});
     return true;
   }
-  function shutdown(){stopped=true;clearTimeout(obsTimer);clearTimeout(twitchTimer);clearTimeout(refreshTimer);close(obsWS);close(twitchWS);}
+  function shutdown(){stopped=true;rejectPendingObs('Server shutting down');clearTimeout(obsTimer);clearTimeout(twitchTimer);clearTimeout(refreshTimer);close(obsWS);close(twitchWS);}
   if(obsAddress){obsTimer=timer(connectOBS,1000);}
   if(tokens){twitchTimer=timer(()=>startTwitch().catch(e=>{status.twitch.error=e.message;notifyStatus();scheduleTwitch();}),1000);}
   return {handle,summary,shutdown,modeForScene,refreshMode};
