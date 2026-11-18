@@ -43,7 +43,7 @@ New 1920×1080 Browser Sources:
 - `/overlay/transition` — animated neon / wipe / fade on OBS scene changes; add a common referenced Browser Source across OBS scenes.
 - `/overlay/twitch-alerts` — new follower, subscriber, incoming raid and Bits-cheer alert cards.
 
-All three overlays have transparent backgrounds when idle where appropriate. Existing overlays and the red Weazel News ticker remain available. Scene sync **reads the OBS program scene**, it does not switch scenes in OBS. Animated overlays are not native OBS stinger transitions.
+All three overlays have transparent backgrounds when idle where appropriate. Existing overlays and the red Weazel News ticker remain available. Scene sync **reads the OBS program scene**, it does not switch scenes in OBS. The legacy browser animation is separate from the new native OBS Stinger; use the native Stinger for an OBS-controlled cut.
 
 **Configuration:** copy `.env.example` to an untracked `.env` file, set OBS WebSocket and Twitch credentials, then rebuild the Docker service. OAuth credentials remain on your Docker host. Twitch needs an OAuth application with the exact redirect URI ending `/api/integrations/twitch-callback` and, outside localhost development, an HTTPS URL. Use the dashboard to authorize Twitch, see OBS connection status, map OBS scenes, test alerts/transitions, edit positions, and save presets or backup files.
 

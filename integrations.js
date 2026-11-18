@@ -93,9 +93,9 @@ module.exports=function createIntegrations({dataDir,getSettings,authorized,respo
     if(/end|offline|outro/.test(n))return 'ending';
     return 'gameplay';
   }
-  function emitTransition(){
+  function emitTransition(forcePreview=false){
     const settings=getSettings();
-    if(settings.transitionsEnabled===false || settings.transitionMode==='native')return;
+    if(!forcePreview && (settings.transitionsEnabled===false || settings.transitionMode==='native'))return;
     emit('transition',{id:crypto.randomUUID(),style:settings.transitionStyle||'neon',duration:settings.transitionDuration||1200});
   }
   function setOBSScene(scene,initial=false){
@@ -259,7 +259,7 @@ module.exports=function createIntegrations({dataDir,getSettings,authorized,respo
         emit('twitch-alert',{id:crypto.randomUUID(),kind:'test',title:'NEW FOLLOWER',viewer:'ViceCityViewer',detail:'TEST ALERT'});
         return respond(res,200,{ok:true});
       }
-      if(p==='/api/integrations/test-transition'&&req.method==='POST'){emitTransition();return respond(res,200,{ok:true});}
+      if(p==='/api/integrations/test-transition'&&req.method==='POST'){emitTransition(true);return respond(res,200,{ok:true});}
       return respond(res,404,{error:'Not found'});
     })().catch(e=>{if(!res.headersSent)respond(res,400,{error:e.message});});
     return true;
