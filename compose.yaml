@@ -1,0 +1,16 @@
+services:
+  vice-after-dark:
+    build: .
+    container_name: vice-after-dark
+    restart: unless-stopped
+    environment:
+      ADMIN_PASSWORD: "SET_A_LONG_RANDOM_PASSWORD"
+      PORT: "8787"
+    ports:
+      - "8787:8787"
+    volumes:
+      - vice-overlay-data:/app/data
+    security_opt:
+      - no-new-privileges:true
+volumes:
+  vice-overlay-data:

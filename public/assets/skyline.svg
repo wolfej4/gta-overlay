@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+ <defs>
+  <linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#07142d"/><stop offset=".46" stop-color="#64205d"/><stop offset=".78" stop-color="#fa677b"/><stop offset="1" stop-color="#fcab84"/></linearGradient>
+  <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#783965"/><stop offset="1" stop-color="#070e2c"/></linearGradient>
+  <linearGradient id="b" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#17284b"/><stop offset="1" stop-color="#071124"/></linearGradient>
+  <pattern id="win" width="26" height="31" patternUnits="userSpaceOnUse"><rect x="7" y="10" width="4" height="7" rx="1" fill="#f7be94" opacity=".65"/><rect x="18" y="10" width="4" height="7" rx="1" fill="#7cf6ec" opacity=".35"/></pattern>
+  <radialGradient id="haze"><stop stop-color="#ffbfa1" stop-opacity=".85"/><stop offset="1" stop-color="#ff6b94" stop-opacity="0"/></radialGradient>
+ </defs>
+ <rect width="1920" height="1080" fill="url(#s)"/>
+ <ellipse cx="1020" cy="610" rx="640" ry="350" fill="url(#haze)"/>
+ <circle cx="1060" cy="540" r="178" fill="#ffc1a0" opacity=".78"/>
+ <path d="M0 732 Q330 690 690 736 T1370 717 T1920 740 V1080 H0Z" fill="url(#sea)"/>
+ <path d="M0 800 H1920" stroke="#ff9ea3" stroke-width="2" opacity=".8"/>
+ <g fill="#222b4b" opacity=".64">
+  <path d="M0 680h76V524h50v-88h53v244h75V535h84v145h67V494h90v186h54v-95h65v95h74V440h91v240h66V550h80v130h45V477h108v203h66V584h64v96h77V494h117v186h66V547h83v133h60V505h125v175h55V566h70v114h75V460h85v220h90V525h70v155h65V575h90v105h54V630h75v50h40V1080H0Z"/>
+ </g>
+ <g fill="url(#b)" stroke="#f378b8" stroke-width="2" stroke-opacity=".35">
+  <path d="M0 806V632h88v174h28V548h112v258h45V612h95v194h57V480h137v326h33V660h82v146h37V562h92v244h44V620h105v186h36V524h115v282h40V580h109v226h39V470h146v336h39V623h110v183h54V550h110v256h37V628h114v178h48V586h120v220h38V650h98v156h65V604h100v202h68V1080H0Z"/>
+ </g>
+ <g opacity=".44"><path d="M0 806V632h88v174h28V548h112v258h45V612h95v194h57V480h137v326h33V660h82v146h37V562h92v244h44V620h105v186h36V524h115v282h40V580h109v226h39V470h146v336h39V623h110v183h54V550h110v256h37V628h114v178h48V586h120v220h38V650h98v156h65V604h100v202h68V1080H0Z" fill="url(#win)"/></g>
+ <g opacity=".4" stroke="#fc8fa8" stroke-width="3"><path d="M80 858h220m120 24h200m150-20h300m80 28h250m-1020 54h350m670-6h210"/></g>
+ <g opacity=".34" fill="#ff91c1"><path d="M0 908l450-40 200 45 450-22 360 33 460-37v193H0Z"/></g>
+ <path d="M0 965Q640 910 1020 973T1920 959V1080H0Z" fill="#071026" opacity=".92"/>
+</svg>
