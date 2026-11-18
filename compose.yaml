@@ -7,7 +7,7 @@ services:
       ADMIN_PASSWORD: "SET_A_LONG_RANDOM_PASSWORD"
       PORT: "8787"
     ports:
-      - "8787:8787"
+      - "${OVERLAY_HOST_PORT:-18787}:8787"
     volumes:
       - vice-overlay-data:/app/data
     security_opt:
