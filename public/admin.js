@@ -80,6 +80,7 @@
     button.addEventListener('click',()=>copy(input.value,button,input));
     row.append(input,button);item.append(heading,row);urls.append(item);
   });
+  fetch('/api/version').then(r=>{if(!r.ok)throw Error('Version unavailable');return r.json();}).then(v=>setText('appVersion','v'+v.version)).catch(()=>setText('appVersion','Version unavailable'));
   fetch('/api/settings').then(r=>r.json()).then(v=>{render(v,true);say('Viewing live settings');}).catch(()=>say('Unable to fetch settings',true));
   const sse=new EventSource('/api/events');sse.addEventListener('settings',e=>{try{render(JSON.parse(e.data));}catch{}});
 })();

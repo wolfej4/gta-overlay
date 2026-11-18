@@ -3,6 +3,7 @@ const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
+const APP_VERSION = require('./package.json').version;
 
 const PORT = Number(process.env.PORT || 8787);
 const HOST = process.env.HOST || '0.0.0.0';
@@ -126,6 +127,7 @@ const overlays = new Set(['gameplay','dispatch','cam','starting','brb','ending',
 const server = http.createServer(async (req,res) => {
   const url = new URL(req.url, 'http://localhost');
   const p = url.pathname;
+  if (req.method === 'GET' && p === '/api/version') return respond(res,200,{version:APP_VERSION});
   if (req.method === 'GET' && p === '/api/health') return respond(res,200,{ok:true});
   if (req.method === 'GET' && p === '/api/settings') return respond(res,200,settings);
   if (req.method === 'GET' && p === '/api/events') {

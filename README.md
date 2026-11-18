@@ -2,6 +2,14 @@
 
 A **self-hosted**, GTA VI / Vice City-inspired, animated browser-source overlay pack built for **ArcadeTimeTV**. All artwork and branding are original fan-created visuals; no Rockstar assets or logos are included.
 
+## Versioning
+
+The app version is stored in **`package.json`** (starting with **v1.0.1**) and displayed on the dashboard sidebar. The server also provides `GET /api/version`, which returns the installed version. For ordinary feature/fix updates pushed to `main`, the GitHub Actions workflow `.github/workflows/auto-version.yml` automatically increases the **patch** component (for example, `1.0.1` → `1.0.2`) and commits the new version back to `main`. Each push to `main` creates one patch release; a batch of edits in one push is treated as one update. Its own version-bump commits use `[skip version]` so the workflow cannot loop.
+
+This automation requires **GitHub Actions enabled** and a workflow token allowed to write repository contents (Settings → Actions → General → Workflow permissions). If an Actions workflow fails, the version will remain unchanged until the permission or failure is resolved. For intentional breaking releases, bump the major or minor component manually and include `[skip version]` in the commit message to keep the chosen number.
+
+After a version update, redeploy with `git pull && docker compose up -d --build` to display the new version locally. The dashboard shows the version actually running inside your Docker container, not the most recent version on GitHub.
+
 ## Overlays
 
 | Scene | OBS URL | Background |
