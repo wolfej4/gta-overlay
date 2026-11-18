@@ -42,9 +42,11 @@
   function fullScreen(type) {
     stage.classList.add('screen');
     const bg=add(stage,'div','screen-bg');
-    if(media.background)bg.style.backgroundImage='url("/assets/custom/background?v='+mediaRev+'")';
-    add(stage,'div','palm left'); add(stage,'div','palm right');
-    add(stage,'div','sun-glow'); add(stage,'div','screen-lines');
+    // Built-in user-provided wallpaper is the default; an uploaded image takes precedence.
+    bg.style.backgroundImage=media.background
+      ? 'url("/assets/custom/background?v='+mediaRev+'")'
+      : 'url("/assets/default-background.webp")';
+    add(stage,'div','screen-lines');
     const top=add(stage,'div','topline');
     top.style.justifyContent='flex-end';
     const pill=add(top,'div','pill');add(pill,'span','dot');add(pill,'span','', 'VICE CITY // 06');

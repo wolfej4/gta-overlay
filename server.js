@@ -147,10 +147,11 @@ const routes = {
   '/admin.css':'admin.css', '/admin.js':'admin.js',
   '/overlay.css':'overlay.css', '/overlay.js':'overlay.js',
   '/assets/skyline.svg':'assets/skyline.svg',
-  '/assets/palm.svg':'assets/palm.svg'
+  '/assets/palm.svg':'assets/palm.svg',
+  '/assets/default-background.webp':'assets/default-background.webp'
 };
 for(const p of SOCIAL_PLATFORMS)routes['/assets/social/'+p+'.svg']='assets/social/'+p+'.svg';
-const types = {html:'text/html; charset=utf-8', css:'text/css; charset=utf-8', js:'application/javascript; charset=utf-8', svg:'image/svg+xml'};
+const types = {html:'text/html; charset=utf-8', css:'text/css; charset=utf-8', js:'application/javascript; charset=utf-8', svg:'image/svg+xml', webp:'image/webp'};
 const overlays = new Set(['gameplay','cam','starting','brb','ending','alert','socials']);
 const server = http.createServer(async (req,res) => {
   const url = new URL(req.url, 'http://localhost');

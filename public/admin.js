@@ -96,10 +96,14 @@
   async function refreshMedia(status){
     if(!status){const r=await fetch('/api/assets',{cache:'no-store'});if(!r.ok)throw Error('Cannot load media status');status=await r.json();}
     for(const kind of ['background','logo']){
-      setText(kind+'State',status[kind]?'Uploaded':'Not uploaded');
-      const thumb=$(kind+'Thumb');thumb.hidden=!status[kind];
-      if(status[kind])thumb.src='/assets/custom/'+kind+'?v='+Date.now();
+      const uploaded=!!status[kind];
+      setText(kind+'State',uploaded?'Custom image uploaded':kind==='background'?'Using included default':'Not uploaded');
+      const thumb=$(kind+'Thumb');
+      thumb.hidden=!uploaded && kind!=='background';
+      if(uploaded)thumb.src='/assets/custom/'+kind+'?v='+Date.now();
+      else if(kind==='background')thumb.src='/assets/default-background.webp';
       else thumb.removeAttribute('src');
+      $('remove'+kind[0].toUpperCase()+kind.slice(1)).disabled=!uploaded;
     }
   }
   async function upload(kind){
