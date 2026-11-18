@@ -56,14 +56,14 @@ test('local API, scene routes, layouts, presets and backup round trip',async t=>
 });
 test('ticker has 161 local-event reports with no protagonist news or parody categories',()=>{
   const source=fs.readFileSync(path.join(__dirname,'../public/ticker-data.js'),'utf8');
-  const contents=source.match(/window\\.VICE_TICKER_ITEMS\\s*=\\s*(\\[[\\s\\S]*\\]);/);
+  const contents=source.match(/window\.VICE_TICKER_ITEMS\s*=\s*(\[[\s\S]*\]);/);
   assert.ok(contents);
   const entries=JSON.parse(contents[1]);
   assert.equal(entries.length,161);
   assert.equal(entries.filter(e=>e.kind==='leonida').length,121);
   assert.equal(entries.filter(e=>e.kind==='archive').length,40);
   assert.ok(entries.every(item=>['leonida','archive'].includes(item.kind)));
-  assert.ok(entries.every(item=>!/(?:\\bjason\\b|\\blucia\\b|parody)/i.test(item.label+' '+item.text)));
+  assert.ok(entries.every(item=>!/(?:\bjason\b|\blucia\b|parody)/i.test(item.label+' '+item.text)));
   assert.equal(new Set(entries.map(item=>item.text)).size,entries.length);
 });
 test('shuffle-bag displays every headline once per round and avoids adjacent repeats',()=>{
