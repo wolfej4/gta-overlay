@@ -50,7 +50,9 @@ const defaults = {
   theme: 'night',
   showAlert: false, alertTitle: 'BREAKING NEWS', alertText: 'This just in...',
   countdownEnd: null,
-  tickerEnabled:true,tickerShowFullScreen:true,tickerMode:'all',tickerSpeed:85,tickerCustom:''
+  tickerEnabled:true,tickerShowFullScreen:true,tickerMode:'all',tickerSpeed:85,tickerCustom:'',
+  transitionsEnabled:true,transitionStyle:'neon',transitionDuration:1200,
+  obsSyncEnabled:true,twitchAlertsEnabled:true,obsSceneMappings:{},layouts:{}
 };
 let stored={};
 try{stored=JSON.parse(fs.readFileSync(SETTINGS_FILE,'utf8'));}catch{}
@@ -103,7 +105,7 @@ function getBody(req) {
 }
 const maxString = {channel:42, handle:42, subtitle:56, streamTitle:72, startingText:90,
   brbText:90, endingText:90,camLabel:48,alertTitle:50,alertText:130,tickerCustom:6000};
-const boolKeys = new Set(['showGameplayBar','showGameplayFooter','showAlert','tickerEnabled','tickerShowFullScreen']);
+const boolKeys = new Set(['showGameplayBar','showGameplayFooter','showAlert','tickerEnabled','tickerShowFullScreen','transitionsEnabled','obsSyncEnabled','twitchAlertsEnabled']);
 function patchSettings(obj) {
   if (!obj || Array.isArray(obj) || typeof obj !== 'object') throw new Error('Expected an object');
   const next = {...settings};
@@ -122,6 +124,12 @@ function patchSettings(obj) {
         accounts[platform]=handle.trim().slice(0,100);
       }
       next.socials=accounts;
+    } else if(k==='transitionDuration'){
+      if(!Number.isInteger(v)||v<300||v>3000)throw new Error('Transition duration must be 300–3000 ms');
+      next.transitionDuration=v;
+    } else if(k==='transitionStyle'){
+      if(!['neon','wipe','fade'].includes(v))throw new Error('Unknown transition style');
+      next.transitionStyle=v;
     } else if(k==='tickerSpeed'){
       if(!Number.isInteger(v)||v<35||v>160)throw new Error('Ticker speed must be 35–160 pixels/second');
       next.tickerSpeed=v;
@@ -138,6 +146,12 @@ function patchSettings(obj) {
   }
   return next;
 }
+function emit(event,data) {
+  const payload='event: '+event+'\ndata: '+JSON.stringify(data)+'\n\n';
+  for(const c of clients){try{c.write(payload);}catch{clients.delete(c);}}
+}
+const studio=require('./studio')({dataDir:DATA_DIR,getSettings:()=>settings,save,patchSettings,authorized,respond,emit});
+const integrations=require('./integrations')({dataDir:DATA_DIR,getSettings:()=>settings,authorized,respond,emit});
 function file(res, name, type) {
   const abs = path.join(ROOT,name);
   fs.readFile(abs, (err, data) => {
@@ -152,17 +166,18 @@ function file(res, name, type) {
 const routes = {
   '/':'admin.html', '/admin':'admin.html',
   '/admin.css':'admin.css', '/admin.js':'admin.js',
-  '/overlay.css':'overlay.css', '/overlay.js':'overlay.js', '/ticker-data.js':'ticker-data.js',
+  '/overlay.css':'overlay.css', '/overlay.js':'overlay.js', '/ticker-data.js':'ticker-data.js', '/studio-ui.js':'studio-ui.js',
   '/assets/skyline.svg':'assets/skyline.svg',
   '/assets/palm.svg':'assets/palm.svg',
   '/assets/default-background.webp':'assets/default-background.webp'
 };
 for(const p of SOCIAL_PLATFORMS)routes['/assets/social/'+p+'.svg']='assets/social/'+p+'.svg';
 const types = {html:'text/html; charset=utf-8', css:'text/css; charset=utf-8', js:'application/javascript; charset=utf-8', svg:'image/svg+xml', webp:'image/webp'};
-const overlays = new Set(['gameplay','cam','starting','brb','ending','alert','socials','ticker']);
+const overlays = new Set(['gameplay','cam','starting','brb','ending','alert','socials','ticker','auto','transition','twitch-alerts']);
 const server = http.createServer(async (req,res) => {
   const url = new URL(req.url, 'http://localhost');
   const p = url.pathname;
+  if(studio.handle(req,res,p) || integrations.handle(req,res,p,url))return;
   if (req.method === 'GET' && p === '/api/version') return respond(res,200,{version:APP_VERSION});
   if (req.method === 'GET' && p === '/api/health') return respond(res,200,{ok:true});
   if (req.method === 'GET' && p === '/api/settings') return respond(res,200,settings);
@@ -231,5 +246,5 @@ const server = http.createServer(async (req,res) => {
 });
 const keepAlive = setInterval(() => { for (const c of clients) { try { c.write(': ping\n\n'); } catch { clients.delete(c); } } },25000);
 server.listen(PORT,HOST,()=>console.log(`Vice After Dark listening at http://${HOST}:${PORT}  |  Dashboard: /admin`));
-function shutdown() { clearInterval(keepAlive); for (const c of clients) c.end(); server.close(()=>process.exit(0)); }
+function shutdown() { integrations.shutdown(); clearInterval(keepAlive); for (const c of clients) c.end(); server.close(()=>process.exit(0)); }
 process.on('SIGTERM',shutdown); process.on('SIGINT',shutdown);
