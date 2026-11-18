@@ -74,6 +74,7 @@ function save(next) {
   fs.writeFileSync(tmp, JSON.stringify(settings, null, 2), {mode: 0o600});
   fs.renameSync(tmp, SETTINGS_FILE);
   broadcast();
+  if(typeof integrations!=='undefined')integrations.refreshMode();
 }
 function authorized(req) {
   const header = req.headers.authorization || '';

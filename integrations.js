@@ -22,6 +22,8 @@ module.exports=function createIntegrations({dataDir,getSettings,authorized,respo
   function saveTokens(data){
     const updated={...data,expires_at:Date.now()+Math.max(60,Number(data.expires_in)||3600)*1000};
     const tmp=tokenFile+'.tmp';fs.writeFileSync(tmp,JSON.stringify(updated),{mode:0o600});fs.renameSync(tmp,tokenFile);tokens=updated;
+    clearTimeout(refreshTimer);
+    refreshTimer=timer(()=>refreshToken().catch(e=>{status.twitch.error=e.message;notifyStatus();}),Math.max(60000,updated.expires_at-Date.now()-180000));
   }
   async function refreshToken(){
     if(!tokens?.refresh_token)throw Error('No Twitch refresh token');
@@ -186,6 +188,11 @@ module.exports=function createIntegrations({dataDir,getSettings,authorized,respo
     try{fs.unlinkSync(tokenFile);}catch(e){if(e.code!=='ENOENT')throw e;}
     status.twitch.connected=false;status.twitch.user='';status.twitch.error='';status.twitch.subscriptions=[];notifyStatus();
   }
+  function refreshMode(){
+    if(!status.obs.scene)return;
+    const next=modeForScene(status.obs.scene);
+    if(next!==activeMode){activeMode=next;if(getSettings().obsSyncEnabled!==false)emit('scene',{sceneName:status.obs.scene,mode:next});notifyStatus();}
+  }
   function handle(req,res,p,url){
     if(!p.startsWith('/api/integrations/'))return false;
     (async()=>{
@@ -208,5 +215,5 @@ module.exports=function createIntegrations({dataDir,getSettings,authorized,respo
   function shutdown(){stopped=true;clearTimeout(obsTimer);clearTimeout(twitchTimer);clearTimeout(refreshTimer);close(obsWS);close(twitchWS);}
   if(obsAddress){obsTimer=timer(connectOBS,1000);}
   if(tokens){twitchTimer=timer(()=>startTwitch().catch(e=>{status.twitch.error=e.message;notifyStatus();scheduleTwitch();}),1000);}
-  return {handle,summary,shutdown,modeForScene};
+  return {handle,summary,shutdown,modeForScene,refreshMode};
 };

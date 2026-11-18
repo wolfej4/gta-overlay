@@ -187,7 +187,16 @@
   $('transitionDuration').addEventListener('input',e=>$('transitionDurationLabel').textContent=e.target.value);
   async function doTest(kind){
     try{
-      api.selectScene(kind==='alert'?'twitch-alerts':'transition');
+      const target=kind==='alert'?'twitch-alerts':'transition';
+      const frame=$('previewIframe');
+      if(!frame.contentWindow || !frame.src.endsWith('/overlay/'+target)){
+        const loaded=new Promise(resolve=>{
+          frame.addEventListener('load',resolve,{once:true});
+          setTimeout(resolve,1300);
+        });
+        api.selectScene(target);
+        await loaded;
+      }
       await request('/api/integrations/test-'+(kind==='alert'?'alert':'transition'),'POST');
       message('Test event sent ✓');
     }catch(e){message(e.message,true);}
