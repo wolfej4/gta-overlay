@@ -4,7 +4,7 @@ A **self-hosted**, GTA VI / Vice City-inspired, animated browser-source overlay 
 
 ## Versioning
 
-The app version is stored in **`package.json`** (now **v1.0.6**) and displayed on the dashboard sidebar. The server also provides `GET /api/version`, which returns the installed version. For ordinary feature/fix updates pushed to `main`, the GitHub Actions workflow `.github/workflows/auto-version.yml` automatically increases the **patch** component (for example, `1.0.1` → `1.0.2`) and commits the new version back to `main`. Each push to `main` creates one patch release; a batch of edits in one push is treated as one update. Its own version-bump commits use `[skip version]` so the workflow cannot loop.
+The app version is stored in **`package.json`** (now **v1.0.7**) and displayed on the dashboard sidebar. The server also provides `GET /api/version`, which returns the installed version. For ordinary feature/fix updates pushed to `main`, the GitHub Actions workflow `.github/workflows/auto-version.yml` automatically increases the **patch** component (for example, `1.0.1` → `1.0.2`) and commits the new version back to `main`. Each push to `main` creates one patch release; a batch of edits in one push is treated as one update. Its own version-bump commits use `[skip version]` so the workflow cannot loop.
 
 This automation requires **GitHub Actions enabled** and a workflow token allowed to write repository contents (Settings → Actions → General → Workflow permissions). If an Actions workflow fails, the version will remain unchanged until the permission or failure is resolved. For intentional breaking releases, bump the major or minor component manually and include `[skip version]` in the commit message to keep the chosen number.
 
@@ -29,15 +29,17 @@ The top-left channel-name label has been removed from the Starting Soon, BRB, an
 - BRB says **TAKING A PIT STOP**; Ending says **ANOTHER NIGHT IN VICE CITY**.
 - Existing custom starting/BRB/ending subtitle settings remain editable in the dashboard.
 
-## Vice City Wire ticker — v1.0.6
+## Weazel News-styled ticker — v1.0.7
 
-A new, independent **News Ticker** OBS browser source is available at `/overlay/ticker` (1920 × 1080, transparent). You can also show it automatically on Starting Soon, BRB and Ending. The ticker contains **193 built-in GTA-themed headlines**: 93 lore references spanning GTA VI, Vice City, San Andreas, Liberty City and Los Santos, plus 100 fan-created satirical stories clearly marked **PARODY**. Weazel News is referenced as a returning GTA universe broadcaster, but **VICE CITY WIRE** is original fan branding. No Rockstar trademarks or official broadcast feeds are simulated.
+A new, independent **News Ticker** OBS browser source is available at `/overlay/ticker` (1920 × 1080, transparent). You can also show it automatically on Starting Soon, BRB and Ending. The ticker contains **193 built-in GTA-themed headlines**: 93 lore references spanning GTA VI, Vice City, San Andreas, Liberty City and Los Santos, plus 100 fan-created satirical stories clearly marked **PARODY**. Weazel News is referenced as a returning GTA universe broadcaster, and the ticker now uses **WEAZEL NEWS** as a fan-made on-screen label with a red-and-white lower third. No Rockstar trademarks or official broadcast feeds are simulated.
 
 **Long runtime and seamless looping:** The feed cycles through all headlines in order, then repeats indefinitely. It uses a virtualized DOM queue, recycling previously scrolled-off headlines to prevent gaps or excessive memory use. At the default **85 pixels/second**, one entire circuit should take many minutes; the precise time depends on browser font metrics and selected headlines. There is no external network dependency or timer-based reload.
 
 Dashboard controls: **enable/disable**, **show on full-screen scenes**, **All / Lore only / Parody only**, **scroll speed (35–160 px/sec)**, and **custom headlines (one per line)**. User-added headlines appear after the built-in set. Press Save & Broadcast to update OBS. Use a separate source for the ticker if you want it over gameplay without affecting other overlays.
 
 Reference information: [official Grand Theft Auto VI](https://www.rockstargames.com/VI), [Rockstar Newswire](https://www.rockstargames.com/newswire), and [trailer breakdown showing Weazel News](https://gtaplaybook.com/gta6/locations/weazel-news/). All fan satire is fiction rather than reports of real events or confirmed in-game missions.
+
+The ticker is now **flush with the bottom edge across the full 1920-pixel-wide design canvas**, with no side or bottom margins. The red-and-white lower third is styled after the GTA V television-news aesthetic; it is an unofficial fan overlay, not a Rockstar/Weazel News product. The feed, speed controls, fictional-story labeling, and endless looping remain unchanged.
 
 ## Overlays
 

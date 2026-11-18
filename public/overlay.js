@@ -54,10 +54,10 @@
     }
     if(stories.length===0)return;
     const shell=add(parent,'section','ticker-shell');
-    shell.setAttribute('aria-label','Looping GTA universe news ticker');
+    shell.setAttribute('aria-label','Looping Weazel News-inspired GTA universe news ticker');
     const badge=add(shell,'div','ticker-badge');
     add(badge,'span','ticker-badge-dot');
-    add(badge,'span','ticker-badge-name','VICE CITY WIRE');
+    add(badge,'span','ticker-badge-name','WEAZEL NEWS');
     const viewport=add(shell,'div','ticker-viewport');
     const track=add(viewport,'div','ticker-track');
     let index=0,position=0,previous=null;
