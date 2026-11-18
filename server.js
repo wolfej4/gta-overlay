@@ -126,7 +126,7 @@ function patchSettings(obj) {
       if(!Number.isInteger(v)||v<35||v>160)throw new Error('Ticker speed must be 35–160 pixels/second');
       next.tickerSpeed=v;
     } else if(k==='tickerMode'){
-      if(!['all','lore','parody'].includes(v))throw new Error('Invalid ticker mode');
+      if(!['all','leonida','archive'].includes(v))throw new Error('Invalid ticker mode');
       next.tickerMode=v;
     } else if (k === 'camSide') {
       if (!['left','right'].includes(v)) throw new Error('Invalid camSide');

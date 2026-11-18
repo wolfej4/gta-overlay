@@ -45,7 +45,7 @@
   // back to the first after the complete 193-headline collection finishes.
   function renderTicker(parent){
     if(settings.tickerEnabled===false)return;
-    const mode=['all','lore','parody'].includes(settings.tickerMode)?settings.tickerMode:'all';
+    const mode=['all','leonida','archive'].includes(settings.tickerMode)?settings.tickerMode:'all';
     const library=Array.isArray(window.VICE_TICKER_ITEMS)?window.VICE_TICKER_ITEMS:[];
     const stories=library.filter(item=>mode==='all'||item.kind===mode).slice();
     for(const line of String(settings.tickerCustom||'').split(/\r?\n/)){

@@ -20,16 +20,16 @@
 <section class="settings-panel" id="socialSettings"><div class="settings-heading"><div><span class="eyebrow">SOCIAL ACCOUNTS</span><h2>Where to find you</h2></div></div><p class="note">Enter a handle for each account you want to show. Blank handles and their icons are hidden automatically. Press Save &amp; Broadcast above to apply.</p><div class="social-fields" id="socialFields"></div></section>
 <section class="settings-panel" id="tickerSettings">
 <div class="settings-heading"><div><span class="eyebrow">VICE CITY WIRE</span><h2>Scrolling news ticker</h2></div></div>
-<p class="note">Includes <strong id="tickerStoryCount">193</strong> GTA headlines, with confirmed lore and clearly marked fictional parody reports. The entire reel scrolls before repeating, without a gap. This is an offline collection, not a live news feed.</p>
+<p class="note">Includes <strong id="tickerStoryCount">109</strong> story-based GTA news bulletins and classic archives, with no parody headlines. The reel loops indefinitely. This is an offline archive, not a live news feed.</p>
 <div class="field-grid">
-<div class="field"><label for="tickerMode">Ticker headline categories</label><select id="tickerMode" data-field="tickerMode"><option value="all">GTA lore + parody</option><option value="lore">GTA lore only</option><option value="parody">Parody headlines only</option></select></div>
+<div class="field"><label for="tickerMode">Ticker headline categories</label><select id="tickerMode" data-field="tickerMode"><option value="all">All news</option><option value="leonida">Leonida / GTA VI</option><option value="archive">Classic GTA archives</option></select></div>
 <div class="field"><label for="tickerSpeed">Scroll speed — <span id="tickerSpeedValue">85</span> px/sec</label><input id="tickerSpeed" data-field="tickerSpeed" type="range" min="35" max="160" step="5" value="85"></div>
 </div>
 <div class="toggles">
 <label><input type="checkbox" id="tickerEnabled" data-field="tickerEnabled"> Enable ticker</label>
 <label><input type="checkbox" id="tickerShowFullScreen" data-field="tickerShowFullScreen"> Include ticker on Starting Soon / BRB / Ending</label>
 </div>
-<div class="field ticker-field"><label for="tickerCustom">Extra headlines (one per line)</label><textarea id="tickerCustom" data-field="tickerCustom" maxlength="6000" rows="5" placeholder="Optional: type your own GTA-style headlines here"></textarea><small class="help">Custom headlines appear after the built-in reel and automatically repeat with it. Save &amp; Broadcast applies all changes.</small></div>
+<div class="field ticker-field"><label for="tickerCustom">Extra headlines (one per line)</label><textarea id="tickerCustom" data-field="tickerCustom" maxlength="6000" rows="5" placeholder="Optional: write your own GTA news headlines"></textarea><small class="help">Custom headlines appear after the built-in reel and automatically repeat with it. Save &amp; Broadcast applies all changes.</small></div>
 </section>
 <section class="settings-panel" id="mediaSettings"><div class="settings-heading"><div><span class="eyebrow">STREAM BRANDING</span><h2>Background &amp; logo</h2></div></div><p class="note">Upload PNG, JPEG or WebP images (up to 8 MB each). Images persist in your Docker volume. Backgrounds apply to Starting Soon, BRB and Ending. The logo appears on full-screen scenes and gameplay.</p>
 <div class="media-grid"><div class="media-item"><label for="backgroundFile">Full-screen background</label><input id="backgroundFile" type="file" accept="image/png,image/jpeg,image/webp"><div class="media-actions"><button id="uploadBackground" type="button" class="btn pink">Upload background</button><button id="removeBackground" type="button" class="btn outline">Remove</button><span id="backgroundState">Not uploaded</span></div><img id="backgroundThumb" alt="Uploaded background preview" hidden></div>
