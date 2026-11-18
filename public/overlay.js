@@ -85,19 +85,20 @@
     add(brandEl,'span','brand-name',text(settings.channel).toUpperCase());
   }
 
-  // Virtualized ticker: only a few headlines exist in the DOM at once.
-  // After each item scrolls away it is replaced by the next item, wrapping
-  // back to the first after the complete 193-headline collection finishes.
+  // Virtualized news ticker: each shuffled headline appears once per pass;
+  // the next pass is reshuffled to avoid a predictable repeating sequence.
   function renderTicker(parent){
     if(settings.tickerEnabled===false)return;
     const mode=['all','leonida','archive'].includes(settings.tickerMode)?settings.tickerMode:'all';
     const library=Array.isArray(window.VICE_TICKER_ITEMS)?window.VICE_TICKER_ITEMS:[];
-    const stories=library.filter(item=>mode==='all'||item.kind===mode).slice();
+    const noCharacters=text=>!/\b(?:jason|lucia)\b/i.test(String(text||''));
+    const stories=library.filter(item=>(mode==='all'||item.kind===mode)&&noCharacters(item.text)).slice();
     for(const line of String(settings.tickerCustom||'').split(/\r?\n/)){
       const headline=line.trim();
-      if(headline)stories.push({kind:'custom',label:'YOUR HEADLINE',text:headline.slice(0,180)});
+      if(headline&&noCharacters(headline))stories.push({kind:'custom',label:'LOCAL DESK',text:headline.slice(0,180)});
     }
     if(stories.length===0)return;
+    const shuffle=window.ViceTickerShuffle.create(stories);
     const shell=mark(add(parent,'section','ticker-shell'),'ticker-shell');
     shell.setAttribute('aria-label','Looping Weazel News-inspired GTA universe news ticker');
     const badge=add(shell,'div','ticker-badge');
@@ -105,9 +106,9 @@
     add(badge,'span','ticker-badge-name','WEAZEL NEWS');
     const viewport=add(shell,'div','ticker-viewport');
     const track=add(viewport,'div','ticker-track');
-    let index=0,position=0,previous=null;
+    let position=0,previous=null;
     function appendNext(){
-      const story=stories[index];index=(index+1)%stories.length;
+      const story=shuffle.next();
       const item=add(track,'span','ticker-item ticker-'+story.kind);
       add(item,'span','ticker-topic',story.label);
       add(item,'span','ticker-headline',story.text);

@@ -4,7 +4,7 @@ A **self-hosted**, GTA VI / Vice City-inspired, animated browser-source overlay 
 
 ## Versioning
 
-The app version is stored in **`package.json`** (now **v1.1.0**) and displayed on the dashboard sidebar. The server also provides `GET /api/version`, which returns the installed version. For ordinary feature/fix updates pushed to `main`, the GitHub Actions workflow `.github/workflows/auto-version.yml` automatically increases the **patch** component (for example, `1.0.1` → `1.0.2`) and commits the new version back to `main`. Each push to `main` creates one patch release; a batch of edits in one push is treated as one update. Its own version-bump commits use `[skip version]` so the workflow cannot loop.
+The app version is stored in **`package.json`** (now **v1.1.1**) and displayed on the dashboard sidebar. The server also provides `GET /api/version`, which returns the installed version. For ordinary feature/fix updates pushed to `main`, the GitHub Actions workflow `.github/workflows/auto-version.yml` automatically increases the **patch** component (for example, `1.0.1` → `1.0.2`) and commits the new version back to `main`. Each push to `main` creates one patch release; a batch of edits in one push is treated as one update. Its own version-bump commits use `[skip version]` so the workflow cannot loop.
 
 This automation requires **GitHub Actions enabled** and a workflow token allowed to write repository contents (Settings → Actions → General → Workflow permissions). If an Actions workflow fails, the version will remain unchanged until the permission or failure is resolved. For intentional breaking releases, bump the major or minor component manually and include `[skip version]` in the commit message to keep the chosen number.
 
@@ -45,11 +45,13 @@ All three overlays have transparent backgrounds when idle where appropriate. Exi
 
 **Full setup guide:** [`docs/STUDIO.md`](docs/STUDIO.md). Run `npm test` for basic server/API verification. These integrations require actual OBS and Twitch accounts/devices for live end-to-end testing.
 
-## Weazel News ticker — v1.0.8
+## Weazel News ticker — v1.1.1
 
-A red, full-width **WEAZEL NEWS** browser source at `/overlay/ticker` (1920 × 1080, transparent), also optionally shown on full-screen scenes. The ticker now includes **109 newsroom-style GTA bulletins**, drawn from official GTA VI character/location descriptions and events in earlier released GTA games. **All 100 parody headlines are removed from the file itself.** Categories: All News, Leonida / GTA VI, Classic GTA archives. This is **in-universe story coverage**, not an actual live Weazel News broadcast or real-world reporting. Original fan project, unofficial.
+The red, full-width **WEAZEL NEWS** browser source at `/overlay/ticker` now contains **161 local-news bulletins**: 121 from Vice City and the rest of Leonida, plus 40 from older GTA locations including Los Santos, Blaine County, Liberty City, San Fierro, and Las Venturas. The old plot-and-character news items, including all mentions of Jason and Lucia, were removed.
 
-The ticker cycles continuously through every selected item and restarts at the beginning with no pause. The speed and custom-headline options remain available.
+**Fictional newsroom simulation, not real or officially confirmed events.** The reports cover traffic, crime, emergency response, weather, tourism, nightlife, boating and civic issues in GTA's fictional world. The headlines are invented for stream atmosphere rather than taken from Rockstar's narrative or an external news service. They are written as straight-faced local reports, without joke/parody headlines.
+
+**Randomized, non-repeating rotation:** the ticker shuffles the selected headline pool on load, displays each story exactly once per round, then reshuffles for the next round. A story cannot appear twice in a single round or repeat immediately across rounds (when at least two stories are available). The virtualized queue supports indefinite scrolling without a blank gap. The ticker keeps its full-width red design, scroll-speed slider, enable controls and optional custom headlines. Dashboard category filters: All local reports, Vice City & Leonida, and Other GTA cities. Custom headlines join the shuffle; entries containing the names Jason or Lucia are excluded from display, but retained in saved settings.
 
 
 ## Overlays

@@ -167,7 +167,7 @@ function file(res, name, type) {
 const routes = {
   '/':'admin.html', '/admin':'admin.html',
   '/admin.css':'admin.css', '/admin.js':'admin.js',
-  '/overlay.css':'overlay.css', '/overlay.js':'overlay.js', '/ticker-data.js':'ticker-data.js', '/studio-ui.js':'studio-ui.js',
+  '/overlay.css':'overlay.css', '/overlay.js':'overlay.js', '/ticker-data.js':'ticker-data.js', '/ticker-shuffle.js':'ticker-shuffle.js', '/studio-ui.js':'studio-ui.js',
   '/assets/skyline.svg':'assets/skyline.svg',
   '/assets/palm.svg':'assets/palm.svg',
   '/assets/default-background.webp':'assets/default-background.webp'

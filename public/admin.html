@@ -22,17 +22,17 @@
 <div class="toggles"><label><input type="checkbox" id="showGameplayBar" data-field="showGameplayBar"> Top gameplay banner</label><label><input type="checkbox" id="showGameplayFooter" data-field="showGameplayFooter"> Gameplay footer</label></div></section>
 <section class="settings-panel" id="socialSettings"><div class="settings-heading"><div><span class="eyebrow">SOCIAL ACCOUNTS</span><h2>Where to find you</h2></div></div><p class="note">Enter a handle for each account you want to show. Blank handles and their icons are hidden automatically. Press Save &amp; Broadcast above to apply.</p><div class="social-fields" id="socialFields"></div></section>
 <section class="settings-panel" id="tickerSettings">
-<div class="settings-heading"><div><span class="eyebrow">VICE CITY WIRE</span><h2>Scrolling news ticker</h2></div></div>
-<p class="note">Includes <strong id="tickerStoryCount">109</strong> story-based GTA news bulletins and classic archives, with no parody headlines. The reel loops indefinitely. This is an offline archive, not a live news feed.</p>
+<div class="settings-heading"><div><span class="eyebrow">WEAZEL NEWS</span><h2>Scrolling local news</h2></div></div>
+<p class="note">Includes <strong id="tickerStoryCount">161</strong> fictional local-news reports from Vice City, Leonida and classic GTA locations. Headlines are shuffled and played once each before reshuffling for the next round. No Jason/Lucia stories or joke headlines. Not a live news feed.</p>
 <div class="field-grid">
-<div class="field"><label for="tickerMode">Ticker headline categories</label><select id="tickerMode" data-field="tickerMode"><option value="all">All news</option><option value="leonida">Leonida / GTA VI</option><option value="archive">Classic GTA archives</option></select></div>
+<div class="field"><label for="tickerMode">Ticker headline categories</label><select id="tickerMode" data-field="tickerMode"><option value="all">All local reports</option><option value="leonida">Vice City & Leonida</option><option value="archive">Other GTA cities</option></select></div>
 <div class="field"><label for="tickerSpeed">Scroll speed — <span id="tickerSpeedValue">85</span> px/sec</label><input id="tickerSpeed" data-field="tickerSpeed" type="range" min="35" max="160" step="5" value="85"></div>
 </div>
 <div class="toggles">
 <label><input type="checkbox" id="tickerEnabled" data-field="tickerEnabled"> Enable ticker</label>
 <label><input type="checkbox" id="tickerShowFullScreen" data-field="tickerShowFullScreen"> Include ticker on Starting Soon / BRB / Ending</label>
 </div>
-<div class="field ticker-field"><label for="tickerCustom">Extra headlines (one per line)</label><textarea id="tickerCustom" data-field="tickerCustom" maxlength="6000" rows="5" placeholder="Optional: write your own GTA news headlines"></textarea><small class="help">Custom headlines appear after the built-in reel and automatically repeat with it. Save &amp; Broadcast applies all changes.</small></div>
+<div class="field ticker-field"><label for="tickerCustom">Extra headlines (one per line)</label><textarea id="tickerCustom" data-field="tickerCustom" maxlength="6000" rows="5" placeholder="Optional: write your own GTA news headlines"></textarea><small class="help">Your custom headlines also join the shuffled rotation. Lines mentioning Jason or Lucia are skipped without deleting saved text. Save &amp; Broadcast applies all changes.</small></div>
 </section>
 <section class="settings-panel" id="studioIntegrations">
 <div class="settings-heading"><div><span class="eyebrow">LIVE CONNECTIONS</span><h2>Twitch, OBS &amp; transitions</h2></div><button type="button" class="btn outline" id="refreshConnections">Refresh status</button></div>
