@@ -1,548 +1,808 @@
-/* Curated GTA story bulletins, not live news or live gameplay reporting. */
+/* Fictional in-universe local news bulletin headlines for a fan-made GTA-style stream overlay. Not confirmed game events or a live news feed. */
 window.VICE_TICKER_ITEMS = [
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Vice City and neighboring coastal communities feature in new Leonida overview"
+    "label": "VICE CITY",
+    "text": "Traffic collision closes two lanes along Ocean Beach while crews clear damaged vehicles"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Weazel News broadcasts motorcycle-related incident in Vice City"
+    "label": "VICE CITY",
+    "text": "Police establish a temporary perimeter near Vice Point following reports of gunfire"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Weazel News coverage of Vice City streets appears in GTA VI trailer"
+    "label": "VICE CITY",
+    "text": "Road crews announce overnight resurfacing on a major route through Downtown Vice City"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Weazel News branding appears in official Vice City television footage"
+    "label": "VICE CITY",
+    "text": "Marina authorities investigate a speedboat found abandoned near a waterfront dock"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Jason Duval and Lucia Caminos at center of Leonida criminal investigation"
+    "label": "VICE CITY",
+    "text": "Officials issue a heat advisory ahead of another humid afternoon across the city"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Failed robbery places Jason and Lucia in escalating Leonida conspiracy"
+    "label": "VICE CITY",
+    "text": "Port authority reports delays after a cargo vessel loses power approaching the harbor"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Lucia Caminos previously served time at Leonida Penitentiary"
+    "label": "VICE CITY",
+    "text": "Businesses on Ocean Drive report higher foot traffic as weekend nightlife begins"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Jason Duval linked to criminal networks operating along the coast"
+    "label": "VICE CITY",
+    "text": "Fire crews respond to smoke reported from the upper floors of a Downtown office building"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Cal Hampton monitors Coast Guard communications near Leonida"
+    "label": "VICE CITY",
+    "text": "Traffic signals malfunction at a busy Washington Beach intersection during rush hour"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Cal Hampton follows reports of suspicious activity along the waterways"
+    "label": "VICE CITY",
+    "text": "Coast Guard units investigate an unregistered vessel operating offshore after dark"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Businessman Boobie Ike oversees real estate, nightclub and music interests"
+    "label": "VICE CITY",
+    "text": "Residents report a series of vehicle break-ins near beachfront parking areas"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Only Raw Records founder Dre'Quan Priest seeks new music success"
+    "label": "VICE CITY",
+    "text": "Airport officials announce temporary changes to access roads near Vice City International"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Bae-Luxe and Roxy emerge as recording duo Real Dimez"
+    "label": "VICE CITY",
+    "text": "Police ask drivers to avoid a section of Vice Point after a multi-vehicle pursuit"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Only Raw Records signs rising artists Real Dimez"
+    "label": "VICE CITY",
+    "text": "A power outage disrupts several blocks near the Downtown entertainment district"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Experienced bank robber Raul Bautista identified in criminal network"
+    "label": "VICE CITY",
+    "text": "Emergency responders assist boaters following a collision in the Intracoastal waterway"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Brian Heder operates boatyard connected to coastal smuggling"
+    "label": "VICE CITY",
+    "text": "City inspectors order repairs at a waterfront property following structural concerns"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Jason Duval stays on property owned by boatyard operator Brian Heder"
+    "label": "VICE CITY",
+    "text": "Transit officials warn of longer travel times during evening events around Ocean Beach"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Leonida Keys form southern chain of islands and coastal roads"
+    "label": "VICE CITY",
+    "text": "Investigators review security footage after a jewelry store burglary in the business district"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Grassrivers wetlands featured in Leonida regional footage"
+    "label": "VICE CITY",
+    "text": "Flooded intersections cause delays as heavy afternoon rain moves over the coast"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Port Gellhorn among destinations featured in state-wide overview"
+    "label": "VICE CITY",
+    "text": "Fire officials investigate an overnight warehouse blaze in a commercial district"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Ambrosia highlighted as industrial destination in Leonida"
+    "label": "VICE CITY",
+    "text": "Vice City police expand patrols near bars and nightclubs ahead of the holiday weekend"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Mount Kalaga wilderness area featured in interior Leonida footage"
+    "label": "VICE CITY",
+    "text": "Multiple vehicles are recovered following an investigation into a suspected chop shop"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Vice City nightlife contrasts with city's criminal underworld"
+    "label": "VICE CITY",
+    "text": "Construction crews temporarily restrict access to a busy bridge connecting city districts"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Vice City returns to center of Leonida crime story"
+    "label": "VICE CITY",
+    "text": "Businesses reopen after an early-morning water main break damages a downtown roadway"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Jason Duval and Lucia Caminos among figures featured in new story"
+    "label": "VICE CITY",
+    "text": "Marine patrol officers remind boat owners of new docking restrictions near the city center"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Vice City waterfront and nightlife districts featured in new footage"
+    "label": "VICE CITY",
+    "text": "Authorities search for a driver who fled the scene of a collision on a beachfront road"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Jason and Lucia forced into closer partnership following failed robbery"
+    "label": "VICE CITY",
+    "text": "Public works crews begin repairs after storm winds damage several oceanfront signs"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Lucia Caminos seeks a fresh start after leaving prison"
+    "label": "VICE CITY",
+    "text": "Residents of a high-rise report an evacuation triggered by a late-night fire alarm"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Brian Heder's boatyard linked to region's smuggling interests"
+    "label": "VICE CITY",
+    "text": "Police investigate reports of street racing near an industrial access road"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Boobie Ike works with Dre'Quan Priest and Only Raw Records"
+    "label": "VICE CITY",
+    "text": "Parking restrictions take effect around a sold-out concert in the entertainment district"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Raul Bautista known for increasingly high-stakes robbery plans"
+    "label": "VICE CITY",
+    "text": "Weather officials track a line of thunderstorms moving toward the metropolitan area"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Cal Hampton tracks coastal rumors and radio reports"
+    "label": "VICE CITY",
+    "text": "Several ferry departures are postponed due to reduced visibility near the harbor"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Criminal conspiracy stretches from Vice City across the state of Leonida"
+    "label": "VICE CITY",
+    "text": "Detectives examine evidence following a robbery at a convenience store in Vice Point"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Resort neighborhoods and crime shape Leonida's contrasting image"
+    "label": "VICE CITY",
+    "text": "Cleanup crews reopen a public beach after debris washes ashore overnight"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Leonida offers coastal beaches, inland districts and expansive waterways"
+    "label": "VICE CITY",
+    "text": "City officials review proposals for expanded late-night transit service"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Vice City and the Leonida Keys among showcased locations"
+    "label": "LEONIDA KEYS",
+    "text": "Marine units assist a disabled charter boat south of the Keys"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Real Dimez combine recorded music with a large social-media audience"
+    "label": "LEONIDA KEYS",
+    "text": "Bridge traffic slows after a delivery truck breaks down on a two-lane causeway"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Leonida serves as setting of new Vice City crime story"
+    "label": "LEONIDA KEYS",
+    "text": "Harbor officials warn of restricted navigation near a damaged channel marker"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Vice City again takes center stage in GTA series"
+    "label": "LEONIDA KEYS",
+    "text": "Local businesses prepare for a surge of weekend visitors along the island chain"
   },
   {
     "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Jason Duval and Lucia Caminos lead the new Leonida story"
+    "label": "LEONIDA KEYS",
+    "text": "Coast Guard crews search waters near the Keys following a missing-boater report"
+  },
+  {
+    "kind": "leonida",
+    "label": "LEONIDA KEYS",
+    "text": "An overnight fire damages several storage units at a marina complex"
+  },
+  {
+    "kind": "leonida",
+    "label": "LEONIDA KEYS",
+    "text": "Ferry operators suspend one route while mechanics inspect an engine"
+  },
+  {
+    "kind": "leonida",
+    "label": "LEONIDA KEYS",
+    "text": "Residents report a temporary communications outage affecting several island communities"
+  },
+  {
+    "kind": "leonida",
+    "label": "LEONIDA KEYS",
+    "text": "Road crews begin emergency work on a section of coastal highway"
+  },
+  {
+    "kind": "leonida",
+    "label": "LEONIDA KEYS",
+    "text": "Commercial fishing vessels are asked to avoid a temporary marine safety zone"
+  },
+  {
+    "kind": "leonida",
+    "label": "LEONIDA KEYS",
+    "text": "Officials issue a small-craft advisory as winds strengthen offshore"
+  },
+  {
+    "kind": "leonida",
+    "label": "LEONIDA KEYS",
+    "text": "Marine patrol investigates a collision between two recreational boats"
+  },
+  {
+    "kind": "leonida",
+    "label": "LEONIDA KEYS",
+    "text": "An unoccupied boat is recovered near a remote shoreline during routine patrols"
+  },
+  {
+    "kind": "leonida",
+    "label": "LEONIDA KEYS",
+    "text": "County crews clear storm debris from a popular waterfront access road"
+  },
+  {
+    "kind": "leonida",
+    "label": "LEONIDA KEYS",
+    "text": "Authorities announce additional traffic patrols around holiday ferry terminals"
+  },
+  {
+    "kind": "leonida",
+    "label": "LEONIDA KEYS",
+    "text": "Emergency teams respond to reports of flooding near low-lying coastal properties"
+  },
+  {
+    "kind": "leonida",
+    "label": "LEONIDA KEYS",
+    "text": "Dock workers report delays following a temporary fuel delivery disruption"
+  },
+  {
+    "kind": "leonida",
+    "label": "LEONIDA KEYS",
+    "text": "Wildlife officers remind visitors to keep clear of protected shoreline nesting sites"
+  },
+  {
+    "kind": "leonida",
+    "label": "GRASSRIVERS",
+    "text": "Wildlife officials close a boardwalk after an alligator is spotted near the entrance"
+  },
+  {
+    "kind": "leonida",
+    "label": "GRASSRIVERS",
+    "text": "Search crews assist hikers who lost their route in the marshlands"
+  },
+  {
+    "kind": "leonida",
+    "label": "GRASSRIVERS",
+    "text": "Heavy rain leaves portions of a park access road under water"
+  },
+  {
+    "kind": "leonida",
+    "label": "GRASSRIVERS",
+    "text": "Authorities warn motorists about limited visibility during early-morning swamp fog"
+  },
+  {
+    "kind": "leonida",
+    "label": "GRASSRIVERS",
+    "text": "Fire crews monitor a small brush fire in a remote area of the wetlands"
+  },
+  {
+    "kind": "leonida",
+    "label": "GRASSRIVERS",
+    "text": "Park rangers remind visitors that some backcountry trails remain closed"
+  },
+  {
+    "kind": "leonida",
+    "label": "GRASSRIVERS",
+    "text": "Wildlife officers investigate reports of unauthorized airboat activity"
+  },
+  {
+    "kind": "leonida",
+    "label": "GRASSRIVERS",
+    "text": "A sightseeing tour is delayed after mechanical problems strand an airboat"
+  },
+  {
+    "kind": "leonida",
+    "label": "GRASSRIVERS",
+    "text": "Rescue teams respond to a distress call from kayakers in a narrow channel"
+  },
+  {
+    "kind": "leonida",
+    "label": "GRASSRIVERS",
+    "text": "Water levels rise following several days of heavy inland rainfall"
+  },
+  {
+    "kind": "leonida",
+    "label": "GRASSRIVERS",
+    "text": "Environmental inspectors begin surveying damage near a protected wetland"
+  },
+  {
+    "kind": "leonida",
+    "label": "GRASSRIVERS",
+    "text": "Rangers temporarily restrict public access to a flooded observation platform"
+  },
+  {
+    "kind": "leonida",
+    "label": "GRASSRIVERS",
+    "text": "An abandoned vehicle is recovered from a remote service road"
+  },
+  {
+    "kind": "leonida",
+    "label": "GRASSRIVERS",
+    "text": "Authorities reopen a trail following an extensive overnight search operation"
+  },
+  {
+    "kind": "leonida",
+    "label": "GRASSRIVERS",
+    "text": "Emergency services advise visitors to carry navigation equipment in remote areas"
+  },
+  {
+    "kind": "leonida",
+    "label": "PORT GELLHORN",
+    "text": "Police investigate a string of vehicle thefts near a busy roadside motel"
+  },
+  {
+    "kind": "leonida",
+    "label": "PORT GELLHORN",
+    "text": "Traffic backs up around a freight depot following a late-night truck collision"
+  },
+  {
+    "kind": "leonida",
+    "label": "PORT GELLHORN",
+    "text": "Firefighters contain a small blaze at an equipment storage facility"
+  },
+  {
+    "kind": "leonida",
+    "label": "PORT GELLHORN",
+    "text": "Officials announce road closures as utility crews replace damaged electrical lines"
+  },
+  {
+    "kind": "leonida",
+    "label": "PORT GELLHORN",
+    "text": "Investigators examine a break-in reported at a commercial garage"
+  },
+  {
+    "kind": "leonida",
+    "label": "PORT GELLHORN",
+    "text": "A rail crossing remains closed while maintenance crews inspect its signal system"
+  },
+  {
+    "kind": "leonida",
+    "label": "PORT GELLHORN",
+    "text": "Emergency workers respond to a fuel spill near an industrial loading area"
+  },
+  {
+    "kind": "leonida",
+    "label": "PORT GELLHORN",
+    "text": "Authorities recover stolen construction equipment outside the city limits"
+  },
+  {
+    "kind": "leonida",
+    "label": "PORT GELLHORN",
+    "text": "Local hotels report increased occupancy ahead of a regional motorsport event"
+  },
+  {
+    "kind": "leonida",
+    "label": "PORT GELLHORN",
+    "text": "Police increase patrols after several reports of reckless driving along the highway"
+  },
+  {
+    "kind": "leonida",
+    "label": "PORT GELLHORN",
+    "text": "A temporary boil-water notice affects businesses in a service-road district"
+  },
+  {
+    "kind": "leonida",
+    "label": "PORT GELLHORN",
+    "text": "Commercial traffic is rerouted during repairs to a damaged overpass"
+  },
+  {
+    "kind": "leonida",
+    "label": "PORT GELLHORN",
+    "text": "Authorities investigate an overnight disturbance at a roadside entertainment venue"
+  },
+  {
+    "kind": "leonida",
+    "label": "PORT GELLHORN",
+    "text": "Emergency medical crews respond to a multi-vehicle crash near the outskirts"
+  },
+  {
+    "kind": "leonida",
+    "label": "PORT GELLHORN",
+    "text": "Repair crews restore power to several commercial blocks following a transformer failure"
+  },
+  {
+    "kind": "leonida",
+    "label": "AMBROSIA",
+    "text": "An industrial facility temporarily halts operations after a machinery malfunction"
+  },
+  {
+    "kind": "leonida",
+    "label": "AMBROSIA",
+    "text": "Fire crews respond to an alarm at a warehouse near the freight corridor"
+  },
+  {
+    "kind": "leonida",
+    "label": "AMBROSIA",
+    "text": "Local officials schedule inspections following reports of unusual odors near a plant"
+  },
+  {
+    "kind": "leonida",
+    "label": "AMBROSIA",
+    "text": "Highway patrol investigates a truck rollover on a regional delivery route"
+  },
+  {
+    "kind": "leonida",
+    "label": "AMBROSIA",
+    "text": "Utility workers begin repairs to damaged equipment serving the industrial district"
+  },
+  {
+    "kind": "leonida",
+    "label": "AMBROSIA",
+    "text": "Police search for suspects in an overnight copper theft at a work site"
+  },
+  {
+    "kind": "leonida",
+    "label": "AMBROSIA",
+    "text": "Several businesses report delivery delays following a partial road closure"
+  },
+  {
+    "kind": "leonida",
+    "label": "AMBROSIA",
+    "text": "A freight train is held outside town while technicians inspect a signaling fault"
+  },
+  {
+    "kind": "leonida",
+    "label": "AMBROSIA",
+    "text": "Emergency responders contain a chemical spill reported inside a loading yard"
+  },
+  {
+    "kind": "leonida",
+    "label": "AMBROSIA",
+    "text": "Factory employees are evacuated during a precautionary safety inspection"
+  },
+  {
+    "kind": "leonida",
+    "label": "AMBROSIA",
+    "text": "Residents are advised of a temporary change to heavy-truck traffic routes"
+  },
+  {
+    "kind": "leonida",
+    "label": "AMBROSIA",
+    "text": "County officials approve a nighttime work zone near a distribution center"
+  },
+  {
+    "kind": "leonida",
+    "label": "MOUNT KALAGA",
+    "text": "Park officials warn hikers of rapidly changing weather near higher elevations"
+  },
+  {
+    "kind": "leonida",
+    "label": "MOUNT KALAGA",
+    "text": "Rescue teams recover an injured climber from a remote trail"
+  },
+  {
+    "kind": "leonida",
+    "label": "MOUNT KALAGA",
+    "text": "Rangers close an overlook while crews repair storm-damaged railings"
+  },
+  {
+    "kind": "leonida",
+    "label": "MOUNT KALAGA",
+    "text": "County authorities investigate a vehicle found off a mountain access road"
+  },
+  {
+    "kind": "leonida",
+    "label": "MOUNT KALAGA",
+    "text": "Heavy rain prompts a temporary advisory for low-water crossings"
+  },
+  {
+    "kind": "leonida",
+    "label": "MOUNT KALAGA",
+    "text": "Forest crews assess fallen trees blocking a popular scenic route"
+  },
+  {
+    "kind": "leonida",
+    "label": "MOUNT KALAGA",
+    "text": "Officials reopen several trails after a morning search operation"
+  },
+  {
+    "kind": "leonida",
+    "label": "MOUNT KALAGA",
+    "text": "Visitors are urged to stay on marked trails following wildlife sightings"
+  },
+  {
+    "kind": "leonida",
+    "label": "MOUNT KALAGA",
+    "text": "A rural communications tower is inspected after an overnight service disruption"
+  },
+  {
+    "kind": "leonida",
+    "label": "MOUNT KALAGA",
+    "text": "Emergency services stage equipment ahead of a forecast mountain storm"
+  },
+  {
+    "kind": "leonida",
+    "label": "MOUNT KALAGA",
+    "text": "Wildlife officers investigate illegal dumping near a park access point"
+  },
+  {
+    "kind": "leonida",
+    "label": "MOUNT KALAGA",
+    "text": "Road maintenance teams begin repairs on a steep section of mountain highway"
+  },
+  {
+    "kind": "leonida",
+    "label": "STATEWIDE",
+    "text": "Leonida highway patrol announces increased enforcement along major coastal routes"
+  },
+  {
+    "kind": "leonida",
+    "label": "STATEWIDE",
+    "text": "Forecasters issue a severe thunderstorm watch for parts of southern Leonida"
+  },
+  {
+    "kind": "leonida",
+    "label": "STATEWIDE",
+    "text": "State officials review evacuation-route signage ahead of tropical storm season"
+  },
+  {
+    "kind": "leonida",
+    "label": "STATEWIDE",
+    "text": "Power companies report scattered outages following overnight lightning strikes"
+  },
+  {
+    "kind": "leonida",
+    "label": "STATEWIDE",
+    "text": "Authorities urge caution as dense fog develops across inland highways"
+  },
+  {
+    "kind": "leonida",
+    "label": "STATEWIDE",
+    "text": "Emergency managers conduct a regional hurricane response exercise"
+  },
+  {
+    "kind": "leonida",
+    "label": "STATEWIDE",
+    "text": "Motorists are warned of delays at several busy holiday travel corridors"
+  },
+  {
+    "kind": "leonida",
+    "label": "STATEWIDE",
+    "text": "Health officials issue a beach water quality advisory at select coastal sites"
+  },
+  {
+    "kind": "leonida",
+    "label": "STATEWIDE",
+    "text": "State marine patrol expands weekend enforcement around busy boating areas"
+  },
+  {
+    "kind": "leonida",
+    "label": "STATEWIDE",
+    "text": "Storm cleanup crews remain active across several coastal counties"
+  },
+  {
+    "kind": "leonida",
+    "label": "STATEWIDE",
+    "text": "Weather services report elevated surf and rip-current risks along the coast"
+  },
+  {
+    "kind": "leonida",
+    "label": "STATEWIDE",
+    "text": "Transportation officials announce overnight inspections of several major bridges"
+  },
+  {
+    "kind": "leonida",
+    "label": "STATEWIDE",
+    "text": "Wildlife authorities remind residents not to approach animals displaced by flooding"
+  },
+  {
+    "kind": "leonida",
+    "label": "STATEWIDE",
+    "text": "Investigators coordinate a multi-county effort targeting stolen vehicles"
   },
   {
     "kind": "archive",
-    "label": "VICE CITY ARCHIVE",
-    "text": "GTA: Vice City takes players into the neon-soaked 1980s"
+    "label": "LOS SANTOS",
+    "text": "Highway patrol investigates reports of illegal street racing near La Puerta"
   },
   {
     "kind": "archive",
-    "label": "VICE CITY ARCHIVE",
-    "text": "Tommy Vercetti's story is a tale of betrayal and revenge"
+    "label": "LOS SANTOS",
+    "text": "Del Perro Pier businesses prepare for another busy weekend on the waterfront"
   },
   {
     "kind": "archive",
-    "label": "VICE CITY ARCHIVE",
-    "text": "The Vercetti Estate overlooks a memorable stretch of Vice City"
+    "label": "LOS SANTOS",
+    "text": "Emergency crews respond to a vehicle collision on the Olympic Freeway"
   },
   {
     "kind": "archive",
-    "label": "VICE CITY ARCHIVE",
-    "text": "Ocean Beach remains one of Vice City's classic districts"
+    "label": "LOS SANTOS",
+    "text": "Residents of Vinewood Hills report temporary road restrictions during filming"
   },
   {
     "kind": "archive",
-    "label": "VICE CITY ARCHIVE",
-    "text": "Starfish Island was home to some of Vice City's biggest addresses"
+    "label": "LOS SANTOS",
+    "text": "Authorities investigate an overnight burglary near Vespucci Beach"
   },
   {
     "kind": "archive",
-    "label": "VICE CITY ARCHIVE",
-    "text": "Ken Rosenberg is among the familiar faces from Tommy Vercetti's era"
+    "label": "LOS SANTOS",
+    "text": "Blazing temperatures prompt a heat advisory across the Los Santos basin"
   },
   {
     "kind": "archive",
-    "label": "VICE CITY ARCHIVE",
-    "text": "Lance Vance plays a major role in the original Vice City story"
+    "label": "LOS SANTOS",
+    "text": "Traffic officials warn of congestion near the Los Santos International Airport"
   },
   {
     "kind": "archive",
-    "label": "VICE CITY ARCHIVE",
-    "text": "Love Fist turned up the volume in the original Vice City"
+    "label": "LOS SANTOS",
+    "text": "Marine units inspect an abandoned vessel off the coast near Pacific Bluffs"
   },
   {
     "kind": "archive",
-    "label": "VICE CITY ARCHIVE",
-    "text": "The Malibu Club became a familiar stop in the 1980s adventure"
+    "label": "LOS SANTOS",
+    "text": "Police ask motorists to avoid a downtown intersection during an active investigation"
   },
   {
     "kind": "archive",
-    "label": "VICE CITY ARCHIVE",
-    "text": "V-Rock and Flash FM helped define the classic Vice City radio mood"
+    "label": "LOS SANTOS",
+    "text": "Power crews restore electricity after an outage affecting multiple Davis blocks"
   },
   {
     "kind": "archive",
-    "label": "VICE CITY ARCHIVE",
-    "text": "Vice City Stories looks back at the city through Victor Vance"
+    "label": "LOS SANTOS",
+    "text": "Repairs to a damaged overpass cause delays on a major city route"
   },
   {
     "kind": "archive",
-    "label": "VICE CITY ARCHIVE",
-    "text": "Vice City has been a GTA location across multiple eras"
+    "label": "LOS SANTOS",
+    "text": "Officials announce additional patrols around a public event in Rockford Hills"
   },
   {
     "kind": "archive",
-    "label": "SAN ANDREAS",
-    "text": "Carl 'CJ' Johnson returns home to Los Santos in GTA: San Andreas"
+    "label": "BLAINE COUNTY",
+    "text": "Desert highway patrol warns of reduced visibility during strong winds near Sandy Shores"
   },
   {
     "kind": "archive",
-    "label": "SAN ANDREAS",
-    "text": "Grove Street is central to CJ's San Andreas story"
+    "label": "BLAINE COUNTY",
+    "text": "Firefighters respond to a brush fire outside the Grand Senora Desert"
   },
   {
     "kind": "archive",
-    "label": "SAN ANDREAS",
-    "text": "Sweet Johnson remains a key figure in the Grove Street Families"
+    "label": "BLAINE COUNTY",
+    "text": "Paleto Bay businesses report delays caused by temporary road construction"
   },
   {
     "kind": "archive",
-    "label": "SAN ANDREAS",
-    "text": "San Andreas sends CJ across Los Santos, San Fierro, and Las Venturas"
+    "label": "BLAINE COUNTY",
+    "text": "Search-and-rescue volunteers assist stranded hikers near Mount Chiliad"
   },
   {
     "kind": "archive",
-    "label": "SAN ANDREAS",
-    "text": "Las Venturas brings a casino-city change of pace to San Andreas"
+    "label": "BLAINE COUNTY",
+    "text": "County deputies investigate a series of break-ins at remote storage properties"
   },
   {
     "kind": "archive",
-    "label": "SAN ANDREAS",
-    "text": "San Fierro adds steep streets and foggy views to the San Andreas map"
+    "label": "BLAINE COUNTY",
+    "text": "Wildlife authorities close a trail after reports of a mountain lion in the area"
   },
   {
     "kind": "archive",
-    "label": "SAN ANDREAS",
-    "text": "Ryder is one of the names players remember from CJ's early days"
+    "label": "BLAINE COUNTY",
+    "text": "Utility crews restore service following an outage near the Alamo Sea"
   },
   {
     "kind": "archive",
-    "label": "SAN ANDREAS",
-    "text": "Flights, bikes, trains, and lowriders all belong to San Andreas memories"
-  },
-  {
-    "kind": "archive",
-    "label": "SAN ANDREAS",
-    "text": "GTA: San Andreas tells a story about family, loyalty, and control of the streets"
-  },
-  {
-    "kind": "archive",
-    "label": "SAN ANDREAS",
-    "text": "The desert roads between San Andreas cities were almost stories of their own"
-  },
-  {
-    "kind": "archive",
-    "label": "SAN ANDREAS",
-    "text": "Los Santos first left its mark on players long before GTA V"
+    "label": "BLAINE COUNTY",
+    "text": "Emergency officials advise drivers to avoid a flooded desert crossing"
   },
   {
     "kind": "archive",
     "label": "LIBERTY CITY",
-    "text": "GTA III takes place in Liberty City across Portland, Staunton Island, and Shoreside Vale"
+    "text": "Traffic backups develop at an Algonquin bridge following an overnight lane closure"
   },
   {
     "kind": "archive",
     "label": "LIBERTY CITY",
-    "text": "GTA III helped define the modern open-world GTA formula"
+    "text": "Police investigate an attempted robbery at a Broker neighborhood store"
   },
   {
     "kind": "archive",
     "label": "LIBERTY CITY",
-    "text": "Claude is the famously quiet protagonist of Grand Theft Auto III"
+    "text": "Fire crews respond to smoke reported inside an apartment building in Bohan"
   },
   {
     "kind": "archive",
     "label": "LIBERTY CITY",
-    "text": "GTA IV brings Niko Bellic to a new life in Liberty City"
+    "text": "Taxi operators report major delays on routes into central Algonquin"
   },
   {
     "kind": "archive",
     "label": "LIBERTY CITY",
-    "text": "Roman Bellic dreams of finding success alongside his cousin Niko"
+    "text": "Staten-area shipping operations face delays following a harbor equipment failure"
   },
   {
     "kind": "archive",
     "label": "LIBERTY CITY",
-    "text": "Broker and Algonquin are part of GTA IV's Liberty City"
+    "text": "Weather service issues a winter travel advisory for parts of Liberty City"
   },
   {
     "kind": "archive",
     "label": "LIBERTY CITY",
-    "text": "Roman's taxi business and bowling invitations remain part of GTA IV's legacy"
+    "text": "Investigators examine a series of vehicle thefts near a Dukes parking structure"
   },
   {
     "kind": "archive",
     "label": "LIBERTY CITY",
-    "text": "The Lost and Damned follows Johnny Klebitz in Liberty City's biker scene"
+    "text": "Transit authorities announce overnight work affecting a busy subway route"
   },
   {
     "kind": "archive",
     "label": "LIBERTY CITY",
-    "text": "The Ballad of Gay Tony follows Luis Lopez through Liberty City's nightlife"
+    "text": "Ferry service briefly pauses during heavy fog in the harbor"
   },
   {
     "kind": "archive",
     "label": "LIBERTY CITY",
-    "text": "Liberty City's landmarks are a different kind of urban jungle from Vice City's beaches"
+    "text": "Authorities reopen a boulevard following an early-morning police investigation"
   },
   {
     "kind": "archive",
-    "label": "LIBERTY CITY",
-    "text": "Grand Theft Auto IV and Episodes from Liberty City intertwine three stories"
+    "label": "SAN FIERRO",
+    "text": "Traffic slows near a waterfront interchange following a multiple-vehicle collision"
   },
   {
     "kind": "archive",
-    "label": "LIBERTY CITY",
-    "text": "Toni Cipriani leads the events of Liberty City Stories"
+    "label": "SAN FIERRO",
+    "text": "Road crews warn motorists of temporary restrictions on steep downtown streets"
   },
   {
     "kind": "archive",
-    "label": "LOS SANTOS",
-    "text": "GTA V's three leads are Michael, Franklin, and Trevor"
+    "label": "SAN FIERRO",
+    "text": "Port officials report shipping delays while equipment undergoes repairs"
   },
   {
     "kind": "archive",
-    "label": "LOS SANTOS",
-    "text": "Los Santos and Blaine County frame the adventure in GTA V"
+    "label": "SAN FIERRO",
+    "text": "City crews clear downed branches following overnight coastal winds"
   },
   {
     "kind": "archive",
-    "label": "LOS SANTOS",
-    "text": "Vinewood Hills offers scenic views and expensive neighbors"
+    "label": "SAN FIERRO",
+    "text": "Police investigate reports of unauthorized vehicle racing in an industrial district"
   },
   {
     "kind": "archive",
-    "label": "LOS SANTOS",
-    "text": "Sandy Shores shows the rougher edge of Blaine County"
+    "label": "LAS VENTURAS",
+    "text": "Casino district traffic increases ahead of a major entertainment weekend"
   },
   {
     "kind": "archive",
-    "label": "LOS SANTOS",
-    "text": "Paleto Bay offers a different pace from downtown Los Santos"
+    "label": "LAS VENTURAS",
+    "text": "Firefighters respond to a kitchen blaze inside a hotel complex"
   },
   {
     "kind": "archive",
-    "label": "LOS SANTOS",
-    "text": "Los Santos Customs is a familiar garage for vehicle upgrades"
+    "label": "LAS VENTURAS",
+    "text": "Police investigate a reported theft near a crowded gaming floor"
   },
   {
     "kind": "archive",
-    "label": "LOS SANTOS",
-    "text": "Lifeinvader satirizes the social-networking world inside GTA V"
+    "label": "LAS VENTURAS",
+    "text": "Highway officials announce detours during overnight desert roadwork"
   },
   {
     "kind": "archive",
-    "label": "LOS SANTOS",
-    "text": "Maze Bank's skyline presence is hard to miss in Los Santos"
-  },
-  {
-    "kind": "archive",
-    "label": "LOS SANTOS",
-    "text": "Vespucci Beach and Del Perro Pier bring GTA V to the waterfront"
-  },
-  {
-    "kind": "archive",
-    "label": "LOS SANTOS",
-    "text": "GTA Online has taken crews from Los Santos to Cayo Perico"
-  },
-  {
-    "kind": "archive",
-    "label": "LOS SANTOS",
-    "text": "The Diamond Casino and Resort is one of GTA Online's best-known destinations"
-  },
-  {
-    "kind": "archive",
-    "label": "LOS SANTOS",
-    "text": "The Los Santos Car Meet gives car enthusiasts a place to gather"
-  },
-  {
-    "kind": "archive",
-    "label": "LOS SANTOS",
-    "text": "GTA Online's chaos ranges from street racing to elaborate heists"
-  },
-  {
-    "kind": "archive",
-    "label": "LOS SANTOS",
-    "text": "Los Santos is familiar to both San Andreas veterans and GTA V players"
-  },
-  {
-    "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Vice City coastline and inland Leonida destinations highlighted in newly released materials"
-  },
-  {
-    "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Mount Kalaga offers hiking routes beyond Leonida's urban centers"
-  },
-  {
-    "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Port Gellhorn showcases the state's waterfront districts"
-  },
-  {
-    "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Real Dimez linked to recording venture Only Raw Records"
-  },
-  {
-    "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Leonida Keys roads connect island communities and boatyards"
-  },
-  {
-    "kind": "leonida",
-    "label": "LEONIDA",
-    "text": "Vice City's beaches remain central to region's resort identity"
-  },
-  {
-    "kind": "archive",
-    "label": "VICE CITY ARCHIVE",
-    "text": "Tommy Vercetti established a criminal empire during Vice City's 1980s era"
-  },
-  {
-    "kind": "archive",
-    "label": "VICE CITY ARCHIVE",
-    "text": "Malibu Club was one of Vice City's best-known nightlife venues"
-  },
-  {
-    "kind": "archive",
-    "label": "VICE CITY ARCHIVE",
-    "text": "Ken Rosenberg worked as a lawyer during Tommy Vercetti's rise"
-  },
-  {
-    "kind": "archive",
-    "label": "SAN ANDREAS",
-    "text": "Carl Johnson returned to Los Santos following his mother's death"
-  },
-  {
-    "kind": "archive",
-    "label": "SAN ANDREAS",
-    "text": "Grove Street Families fought for influence in Los Santos neighborhoods"
-  },
-  {
-    "kind": "archive",
-    "label": "SAN ANDREAS",
-    "text": "Las Venturas casinos feature prominently in San Andreas crime history"
-  },
-  {
-    "kind": "archive",
-    "label": "LIBERTY CITY",
-    "text": "Niko Bellic arrived in Liberty City to live near cousin Roman"
-  },
-  {
-    "kind": "archive",
-    "label": "LIBERTY CITY",
-    "text": "Luis Lopez played a key role in Tony Prince's nightclub businesses"
-  },
-  {
-    "kind": "archive",
-    "label": "LIBERTY CITY",
-    "text": "Johnny Klebitz was central to a Liberty City motorcycle club conflict"
-  },
-  {
-    "kind": "archive",
-    "label": "LOS SANTOS",
-    "text": "Michael De Santa, Franklin Clinton and Trevor Philips planned multiple heists"
-  },
-  {
-    "kind": "archive",
-    "label": "LOS SANTOS",
-    "text": "The Diamond Casino and Resort operates in central Los Santos"
-  },
-  {
-    "kind": "archive",
-    "label": "LOS SANTOS",
-    "text": "Vinewood remains a hub of the Los Santos film industry"
-  },
-  {
-    "kind": "archive",
-    "label": "LOS SANTOS",
-    "text": "Cayo Perico became the target of a high-profile heist"
-  },
-  {
-    "kind": "archive",
-    "label": "LOS SANTOS",
-    "text": "Paleto Bay and Sandy Shores remain distinct Blaine County communities"
+    "label": "LAS VENTURAS",
+    "text": "Airport crews report delays as strong crosswinds affect scheduled arrivals"
   }
 ];
