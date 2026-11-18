@@ -21,13 +21,26 @@ The dispatch stars, location, and mission are **manually controlled** from the d
 1. Extract this folder onto your Docker host (for example `/opt/vice-after-dark`).
 2. Edit `compose.yaml`: **replace `SET_A_LONG_RANDOM_PASSWORD` with a strong unique password**, at least 12 characters. The app refuses to start without one.
 3. In Dockhand, create a new stack using the `compose.yaml` and provide the project directory as build context (or on the CLI run `docker compose up -d --build` inside the folder). This Compose file uses `build: .`, so the entire project directory is needed, not only the YAML contents. If your Dockhand installation doesn't support local build contexts in the stack UI, run the CLI build on that host and then deploy the image through Dockhand.
-4. Open `http://YOUR-DOCKER-IP:8787/admin` to see the control panel.
+4. Open `http://YOUR-DOCKER-IP:18787/admin` to see the control panel.
 5. Click **Unlock Editing** and enter your password. Change the theme, labels, six-star meter, and countdown. Press **Save & Broadcast**. Connected overlays update immediately via Server-Sent Events.
+
+
+### Host port (default: 18787)
+
+The Docker container still listens on port **8787 internally**, but Docker publishes it on **18787** on your host. To use a different host port, set `OVERLAY_HOST_PORT` in a `.env` file next to `compose.yaml`, for example:
+
+```dotenv
+OVERLAY_HOST_PORT=18888
+```
+
+Then restart with `docker compose up -d`. Use the chosen host port in your OBS browser-source URLs. You do not need to change `PORT`, `Dockerfile`, or the container's internal port mapping.
+
+To check whether **18787** appears to be in use on your Docker host before deploying, run `sudo ss -ltn | grep ':18787 '` and `docker ps --format '{{.Names}} {{.Ports}}' | grep 18787`. No output is a good sign, but only Docker can definitively confirm whether it can bind the port.
 
 ### OBS setup
 
 1. In OBS, add **Sources → + → Browser**.
-2. Set the source URL to `http://YOUR-DOCKER-IP:8787/overlay/gameplay`.
+2. Set the source URL to `http://YOUR-DOCKER-IP:18787/overlay/gameplay`.
 3. Set width **1920**, height **1080**, and place it **above** your gameplay capture.
 4. Add additional Browser sources for `/overlay/dispatch` or `/overlay/cam` only when needed.
 5. For Starting Soon / BRB / Ending, create separate OBS scenes and use their respective URLs.
@@ -35,11 +48,11 @@ The dispatch stars, location, and mission are **manually controlled** from the d
 
 ### URL examples
 
-- Dashboard: `http://192.168.0.41:8787/admin` (replace IP with actual Docker host)
-- Gameplay: `http://192.168.0.41:8787/overlay/gameplay`
-- Dispatch: `http://192.168.0.41:8787/overlay/dispatch`
-- Camera: `http://192.168.0.41:8787/overlay/cam`
-- Starting: `http://192.168.0.41:8787/overlay/starting`
+- Dashboard: `http://192.168.0.41:18787/admin` (replace IP with actual Docker host)
+- Gameplay: `http://192.168.0.41:18787/overlay/gameplay`
+- Dispatch: `http://192.168.0.41:18787/overlay/dispatch`
+- Camera: `http://192.168.0.41:18787/overlay/cam`
+- Starting: `http://192.168.0.41:18787/overlay/starting`
 
 ## Security and architecture
 
