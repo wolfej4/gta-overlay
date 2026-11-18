@@ -42,3 +42,34 @@ main{flex:1;padding:45px max(30px,4vw) 25px;min-width:0;max-width:1600px;margin:
 .ticker-field textarea{display:block;width:100%;min-height:110px;resize:vertical;padding:13px;border:1px solid #34465d;border-radius:7px;color:#f5f8fc;background:#0a1528;font:14px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
 .ticker-field textarea:focus{border-color:var(--cyan);outline:2px solid rgba(102,231,234,.25)}
 #tickerSpeed{height:27px;min-height:27px;padding:0;border:0;background:transparent;accent-color:var(--pink)}
+
+/* Studio integrations, widget editor and backup panels */
+.integration-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:19px}
+.integration-card{border:1px solid var(--line);border-radius:10px;padding:19px;background:#0b162b;display:flex;flex-direction:column;gap:12px;min-width:0}
+.integration-card>strong{font-weight:900;letter-spacing:1.5px;color:var(--cyan)}
+.integration-card>p{margin:0}
+.integration-card>.field{margin-top:8px}
+.integration-card .btn{align-self:flex-start}
+.integration-card .media-actions{margin:8px 0}
+.studio-check{display:flex;gap:9px;align-items:center;font-size:13px;margin:9px 0}
+.studio-check input{flex:none}
+.mapping-section{margin-top:20px;border-top:1px solid var(--line);padding-top:20px}
+.mapping-section h3{margin:0 0 8px}
+.mapping-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:18px 0}
+.mapping-row{display:flex;flex-direction:column;gap:6px}
+.mapping-row label{font-weight:700;font-size:12px}
+.mapping-row select,.layout-toolbar select,.integration-card select{width:100%;min-height:46px;padding:10px 13px;border:1px solid #34465d;border-radius:7px;background:#0a1528;color:var(--text);font:inherit}
+.layout-toolbar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;margin-bottom:20px}
+.layout-toolbar .field label{margin-bottom:8px}
+.layout-canvas{position:relative;width:100%;aspect-ratio:16/9;border:2px solid #34465d;border-radius:9px;overflow:hidden;background:radial-gradient(ellipse at 50% 40%,#243558,#090f20)}
+.layout-canvas iframe{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none}
+.layout-hit-layer{position:absolute;inset:0;touch-action:none}
+.layout-widget{position:absolute;display:flex;align-items:flex-start;justify-content:flex-start;padding:5px 9px;box-sizing:border-box;overflow:visible;background:rgba(89,193,222,.16);border:2px dashed rgba(115,235,237,.9);border-radius:5px;color:#f6ffff;font-size:clamp(8px,1.2vw,14px);font-weight:900;text-shadow:0 2px 4px black;cursor:grab;touch-action:none;user-select:none}
+.layout-widget.selected{background:rgba(255,91,165,.2);border-color:var(--pink);outline:2px solid rgba(255,91,165,.2)}
+.layout-widget:active{cursor:grabbing}
+.resize-handle{position:absolute;right:-5px;bottom:-5px;width:15px;height:15px;background:var(--pink);border:2px solid #fff;cursor:nwse-resize}
+.layout-numbers{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px}
+.layout-numbers label{font-size:12px;font-weight:800;display:flex;gap:6px;align-items:center}
+.layout-numbers input{width:92px;padding:9px;border:1px solid #34465d;border-radius:6px;background:#0a1528;color:var(--text)}
+.studio-state{font-size:12px;color:var(--muted)}
+@media(max-width:980px){.integration-grid,.mapping-list,.layout-toolbar{grid-template-columns:1fr}.layout-numbers input{width:75px}}

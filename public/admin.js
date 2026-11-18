@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const names = {gameplay:'Gameplay HUD',cam:'Webcam Frame',alert:'Announcement',starting:'Starting Soon',brb:'Be Right Back',ending:'Stream Ending',socials:'Socials Only',ticker:'News Ticker'};
+  const names = {gameplay:'Gameplay HUD',cam:'Webcam Frame',alert:'Announcement',starting:'Starting Soon',brb:'Be Right Back',ending:'Stream Ending',socials:'Socials Only',ticker:'News Ticker',auto:'OBS Auto Overlay',transition:'Transitions','twitch-alerts':'Twitch Alerts'};
   const $=id=>document.getElementById(id);
   const platformLabels={"twitch":"Twitch","youtube":"YouTube","tiktok":"TikTok","instagram":"Instagram","x":"X","discord":"Discord","facebook":"Facebook","kick":"Kick","bluesky":"Bluesky","threads":"Threads","reddit":"Reddit"};
   const socialInputs=Object.entries(platformLabels).map(([key,label])=>{
@@ -52,6 +52,7 @@
       const r=await fetch('/api/settings',{method:'POST',headers:{'Authorization':'Basic '+btoa('admin:'+pw),'Content-Type':'application/json'},body:'{}'});
       if(!r.ok) throw Error('Incorrect password or server configuration');
       auth=pw;editing=true;setText('status','Editing unlocked');$('loginBtn').textContent='Unlocked';$('loginDialog').close();$('password').value='';$('loginError').textContent='';
+      dispatchEvent(new Event('vice-studio-unlocked'));
     }catch(e){setText('loginError',e.message);}
   });
   const iframe=$('previewIframe'), box=$('previewBox');
@@ -135,6 +136,11 @@
     $('remove'+suffix).addEventListener('click',()=>removeMedia(kind));
   }
   refreshMedia().catch(e=>say(e.message,true));
+  window.viceStudio={
+    authHeaders,unlocked:()=>editing,settings:()=>latest,selectScene:sceneChange,
+    saveSettings:values=>save('/api/settings',values),
+    reloadSettings:async()=>{const r=await fetch('/api/settings',{cache:'no-store'});if(!r.ok)throw Error('Cannot reload settings');render(await r.json(),true);}
+  };
   fetch('/api/version').then(r=>{if(!r.ok)throw Error('Version unavailable');return r.json();}).then(v=>setText('appVersion','v'+v.version)).catch(()=>setText('appVersion','Version unavailable'));
   fetch('/api/settings').then(r=>r.json()).then(v=>{render(v,true);say('Viewing live settings');}).catch(()=>say('Unable to fetch settings',true));
   const sse=new EventSource('/api/events');sse.addEventListener('settings',e=>{try{render(JSON.parse(e.data));}catch{}});
