@@ -4,7 +4,7 @@ A **self-hosted**, GTA VI / Vice City-inspired, animated browser-source overlay 
 
 ## Versioning
 
-The app version is stored in **`package.json`** (now **v1.1.2**) and displayed on the dashboard sidebar. The server also provides `GET /api/version`, which returns the installed version. For ordinary feature/fix updates pushed to `main`, the GitHub Actions workflow `.github/workflows/auto-version.yml` automatically increases the **patch** component (for example, `1.0.1` → `1.0.2`) and commits the new version back to `main`. Each push to `main` creates one patch release; a batch of edits in one push is treated as one update. Its own version-bump commits use `[skip version]` so the workflow cannot loop.
+The app version is stored in **`package.json`** (now **v1.2.0**) and displayed on the dashboard sidebar. The server also provides `GET /api/version`, which returns the installed version. For ordinary feature/fix updates pushed to `main`, the GitHub Actions workflow `.github/workflows/auto-version.yml` automatically increases the **patch** component (for example, `1.0.1` → `1.0.2`) and commits the new version back to `main`. Each push to `main` creates one patch release; a batch of edits in one push is treated as one update. Its own version-bump commits use `[skip version]` so the workflow cannot loop.
 
 This automation requires **GitHub Actions enabled** and a workflow token allowed to write repository contents (Settings → Actions → General → Workflow permissions). If an Actions workflow fails, the version will remain unchanged until the permission or failure is resolved. For intentional breaking releases, bump the major or minor component manually and include `[skip version]` in the commit message to keep the chosen number.
 
@@ -28,6 +28,10 @@ The top-left channel-name label has been removed from the Starting Soon, BRB, an
 - Starting Soon now says **THE STREETS ARE CALLING**, with a countdown labeled **HITTING THE STREETS IN**.
 - BRB says **TAKING A PIT STOP**; Ending says **ANOTHER NIGHT IN VICE CITY**.
 - Existing custom starting/BRB/ending subtitle settings remain editable in the dashboard.
+
+## Native OBS stinger — v1.2.0
+
+The Docker build generates a real transparent 1920×1080 VP9/WebM red wipe, 1.6 seconds at 30 fps. OBS itself cuts scenes at the **800 ms** cover point. Download the asset from `/assets/stingers/vice-red-stinger.webm` after rebuilding and configure it in OBS Studio's **Scene Transitions → + → Stinger** with **Transition Point = 800 ms**. The source generator is `scripts/generate-stinger.js`; `npm run build:stinger` can also run locally with FFmpeg installed. The app's previous browser-source transition remains as an optional fallback.
 
 ## Studio integration release — v1.1.0
 

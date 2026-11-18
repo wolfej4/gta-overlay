@@ -170,10 +170,11 @@ const routes = {
   '/overlay.css':'overlay.css', '/overlay.js':'overlay.js', '/ticker-data.js':'ticker-data.js', '/ticker-shuffle.js':'ticker-shuffle.js', '/studio-ui.js':'studio-ui.js',
   '/assets/skyline.svg':'assets/skyline.svg',
   '/assets/palm.svg':'assets/palm.svg',
-  '/assets/default-background.webp':'assets/default-background.webp'
+  '/assets/default-background.webp':'assets/default-background.webp',
+  '/assets/stingers/vice-red-stinger.webm':'assets/stingers/vice-red-stinger.webm'
 };
 for(const p of SOCIAL_PLATFORMS)routes['/assets/social/'+p+'.svg']='assets/social/'+p+'.svg';
-const types = {html:'text/html; charset=utf-8', css:'text/css; charset=utf-8', js:'application/javascript; charset=utf-8', svg:'image/svg+xml', webp:'image/webp'};
+const types = {html:'text/html; charset=utf-8', css:'text/css; charset=utf-8', js:'application/javascript; charset=utf-8', svg:'image/svg+xml', webp:'image/webp', webm:'video/webm'};
 const overlays = new Set(['gameplay','cam','starting','brb','ending','alert','socials','ticker','auto','transition','twitch-alerts']);
 const server = http.createServer(async (req,res) => {
   const url = new URL(req.url, 'http://localhost');

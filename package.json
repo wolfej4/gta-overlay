@@ -1,11 +1,12 @@
 {
   "name": "vice-after-dark-obs-overlays",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "private": true,
   "description": "A self-hosted OBS browser-source overlay set with live control panel",
   "scripts": {
     "start": "node server.js",
-    "test": "node --test test/*.test.js"
+    "test": "node --test test/*.test.js",
+    "build:stinger": "mkdir -p public/assets/stingers && node scripts/generate-stinger.js | ffmpeg -hide_banner -loglevel error -y -f rawvideo -pixel_format rgba -video_size 960x540 -framerate 30 -i pipe:0 -vf scale=1920:1080:flags=bilinear,format=yuva420p -c:v libvpx-vp9 -b:v 0 -crf 35 -deadline good -cpu-used 5 -row-mt 1 -auto-alt-ref 0 -an public/assets/stingers/vice-red-stinger.webm"
   },
   "engines": {
     "node": ">=20"

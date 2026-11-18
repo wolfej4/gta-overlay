@@ -1,7 +1,15 @@
+FROM node:22-alpine AS stinger-builder
+RUN apk add --no-cache ffmpeg
+WORKDIR /app
+COPY package.json ./
+COPY scripts ./scripts
+RUN npm run build:stinger && test -s public/assets/stingers/vice-red-stinger.webm
+
 FROM node:22-alpine
 WORKDIR /app
 COPY package.json server.js studio.js integrations.js ./
 COPY public ./public
+COPY --from=stinger-builder /app/public/assets/stingers ./public/assets/stingers
 RUN mkdir -p /app/data && chown -R node:node /app
 USER node
 ENV PORT=8787 HOST=0.0.0.0 DATA_DIR=/app/data
